@@ -1,0 +1,7 @@
+{
+  "name": "jet-skills",
+  "owner": { "name": "Jet" },
+  "plugins": [
+    { "name": "jet-skills", "source": ".", "description": "Architect/engineering skills + role commands + guardrails." }
+  ]
+}

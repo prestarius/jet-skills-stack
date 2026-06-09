@@ -1,0 +1,9 @@
+{
+  "name": "jet-skills",
+  "version": "0.1.0",
+  "description": "Jet's company-agnostic Claude Code stack: architect/engineering skills, role-based slash commands, behavioral guardrails, and a per-project context bootstrap.",
+  "author": { "name": "Jet", "email": "prestarius@proton.me" },
+  "homepage": "https://prestarius.dev",
+  "repository": "https://github.com/prestarius/jet-skills-stack",
+  "license": "MIT"
+}
