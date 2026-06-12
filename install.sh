@@ -13,6 +13,17 @@ for d in "${REPO_DIR}"/skills/*/;   do link "${d%/}" "${CLAUDE_DIR}/skills/$(bas
 for f in "${REPO_DIR}"/commands/*.md; do link "$f" "${CLAUDE_DIR}/commands/$(basename "$f")"; done
 for f in "${REPO_DIR}"/agents/*.md;   do link "$f" "${CLAUDE_DIR}/agents/$(basename "$f")"; done
 
+# prune symlinks that point into this repo but whose target no longer exists (renamed/removed components)
+for dir in skills commands agents; do
+  for l in "${CLAUDE_DIR}/${dir}"/*; do
+    [ -L "$l" ] || continue
+    target="$(readlink "$l")"
+    case "$target" in
+      "${REPO_DIR}"/*) [ -e "$target" ] || { rm "$l"; echo "pruned stale link: $l"; } ;;
+    esac
+  done
+done
+
 # CLAUDE.md: append between markers, idempotently
 MARK_START="# >>> jet-skills >>>"; MARK_END="# <<< jet-skills <<<"
 GLOBAL="${CLAUDE_DIR}/CLAUDE.md"; touch "${GLOBAL}"
@@ -32,3 +43,6 @@ echo
 echo "Plugin/marketplace alternative:"
 echo "  claude --plugin-dir ${REPO_DIR}        # one session"
 echo "  /plugin marketplace add ${REPO_DIR}    # then: /plugin install jet-skills@jet-skills"
+echo
+echo "Tip: run /doctor in Claude Code once — with ~30 skills, check the skill-description"
+echo "budget isn't overflowing (truncated descriptions stop skills from triggering)."

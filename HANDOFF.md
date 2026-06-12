@@ -20,8 +20,13 @@ Repo: `github.com/prestarius/jet-skills-stack`, branch `master`.
 - Broadened the guard hook → `hooks/scripts/command-guardrails.sh` (block / ask / allow tiers).
 
 ## Current state
-- **28 full skills (0 stubs), 8 commands, 1 agent, 1 guardrail hook.** README tables + credits in sync.
-- Working tree clean; `master` synced to `origin`. Verify: `git rev-parse HEAD origin/master` (should match).
+- **30 full skills (0 stubs), 8 commands, 1 agent, 1 guardrail hook.** README tables + credits in sync.
+- 2026-06-12 revision: dropped `commands/adr.md` (shadowed — skills are slash-invocable and take
+  precedence over same-name commands); renamed `/security-review` → `/threat-model` (collided with
+  the bundled Claude Code skill); fixed `epic-numbering` frontmatter name to match its directory;
+  demoted `git reset --hard` to the ask tier and added `git stash drop/clear` + `find -delete`;
+  added `meeting-notes` + `postmortem` skills, `/status-report` command, a refresh mode in
+  `/bootstrap-context`, symlink pruning in `install.sh`, and `scripts/validate.sh`.
 
 ## Open decisions
 - None blocking.
@@ -35,14 +40,12 @@ Repo: `github.com/prestarius/jet-skills-stack`, branch `master`.
   shipped file.
 - **Company-agnostic:** no employer / client / internal-project names anywhere in `skills/ commands/
   agents/ hooks/ CLAUDE.md`. All company/domain specifics live ONLY in a per-project `./CONTEXT.md`.
-- **Acceptance gate:** before committing, run a case-insensitive `grep -riE` over the shipped files for
-  the personal-name + former-employer/client **denylist** (kept out of this repo on purpose — see the
-  `~/.claude` project memory `jet-skills-stack`). It must return **zero matches**.
-- **Per-change validation (no test suite):** every `SKILL.md` has `name` + `description`; referenced
-  `references/`/`assets/` files exist; `python3 -m json.tool` parses the 3 JSON files; `bash -n
-  install.sh`; guard smoke test
-  `echo '{"tool_input":{"command":"git push --force"}}' | bash hooks/scripts/command-guardrails.sh; echo $?`
-  → prints BLOCKED, exit 2; README links resolve.
+- **Acceptance gate + per-change validation:** run `scripts/validate.sh` — it encodes the whole
+  checklist (skill frontmatter + name/dir match, bundled-file references, JSON parse, `bash -n`,
+  guard smoke tests, README links) and the **denylist** grep. The denylist stays out of this repo
+  on purpose: the script reads `~/.claude/jet-skills-denylist.txt` (override with
+  `JET_DENYLIST_FILE`) and skips with a note if absent — see the `~/.claude` project memory
+  `jet-skills-stack`. Must print `OK` / zero denylist matches before committing.
 - **Commit policy:** commit only when asked; end messages with the
   `Co-Authored-By: Claude Opus 4.8 (1M context)` trailer. `.DS_Store` is gitignored.
 - **Philosophy:** minimalist, Claude-first, no MCP/infra in v1, flat `skills/`. When evaluating other

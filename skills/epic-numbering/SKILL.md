@@ -1,5 +1,5 @@
 ---
-name: epic-userstories-tasks-numbering
+name: epic-numbering
 description: Numbering convention for project plans broken into Epics, User Stories, and Tasks. Use whenever you create or restructure a backlog, project plan, work breakdown, or roadmap into epics/stories/tasks — even if the user doesn't name the convention.
 ---
 When dividing a plan into Epics, User Stories, and Tasks, use this numbering:

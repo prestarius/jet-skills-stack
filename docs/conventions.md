@@ -5,10 +5,17 @@ How to extend this stack. Keep it small and composable — small, adaptable, mod
 ## Adding a skill
 1. Create `skills/<name>/SKILL.md` with YAML frontmatter `name` + a pushy `description`
    (the description is the trigger; under-triggering is the main failure mode).
+   The frontmatter `name` must equal the directory name — the directory is what becomes the
+   `/command`; `name` is display-only.
 2. Push detail into bundled `references/`, `assets/`, or `scripts/`; keep `SKILL.md` under ~500 lines.
 3. Add the skill to the table in `README.md`.
 4. If it should ship in the plugin, no manifest edit is needed — components in `skills/`,
    `commands/`, `agents/`, `hooks/` are auto-discovered.
+5. Run `scripts/validate.sh` — it must print `OK` before you commit.
+
+Skills are directly slash-invocable, so don't add a wrapper command with the same name as a
+skill — the skill takes precedence and the command is dead weight. Also avoid names of bundled
+Claude Code skills (`code-review`, `security-review`, `verify`, …).
 
 ## Adding a command
 - Create `commands/<name>.md`. Optional frontmatter: `description`, `argument-hint`, `allowed-tools`.

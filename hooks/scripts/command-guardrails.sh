@@ -45,8 +45,6 @@ rm_recursive = rm_present and (bool(re.search(r'-[a-zA-Z]*[rR]', cmd)) or '--rec
 # --- Tier 1: catastrophic -> hard block ---
 if re.search(r'\bgit\s+push\b.*(?:--force(?!-with-lease)|\s-f(?:\s|$))', cmd):
     block("git force push (use --force-with-lease, or push without --force)")
-if re.search(r'\bgit\s+reset\s+--hard\b', cmd):
-    block("git reset --hard discards committed and staged work")
 if re.search(r'\bmkfs\b', cmd):
     block("filesystem format (mkfs)")
 if re.search(r'\bdd\b.*\bof=/dev/', cmd):
@@ -72,6 +70,12 @@ if rm_recursive:
 # --- Tier 2: destructive -> ask (warn, allow override) ---
 if rm_recursive:
     ask("recursive delete (rm -r); double-check the path before proceeding")
+if re.search(r'\bgit\s+reset\s+--hard\b', cmd):
+    ask("git reset --hard discards staged and uncommitted work (commits stay reachable via reflog)")
+if re.search(r'\bgit\s+stash\s+(?:drop|clear)\b', cmd):
+    ask("git stash drop/clear permanently discards stashed changes")
+if re.search(r'\bfind\b[^\n;&|]*\s-delete\b', cmd):
+    ask("find -delete removes every matched file; double-check the predicate")
 if re.search(r'\bgit\s+clean\b.*-[a-zA-Z]*f', cmd) and re.search(r'\bgit\s+clean\b.*-[a-zA-Z]*d', cmd):
     ask("git clean will permanently delete untracked files")
 if re.search(r'\bgit\s+(?:checkout|restore)\s+(?:--\s+)?\.(?:\s|$)', cmd):

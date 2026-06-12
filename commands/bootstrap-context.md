@@ -1,9 +1,17 @@
 ---
-description: Set up this repo's project context — writes a local CONTEXT.md so every other skill/command has company/domain specifics without anything being hardcoded.
+description: Set up or refresh this repo's project context — writes a local CONTEXT.md so every other skill/command has company/domain specifics without anything being hardcoded.
 argument-hint: "[optional: path to a brief or existing docs]"
 ---
 You are setting up per-project context for this repository. Nothing about the user's
 employer/client is hardcoded in this stack — it lives only in the CONTEXT.md you create.
+
+**If `./CONTEXT.md` already exists, refresh instead of recreating:** read it, compare it
+against the current repo reality (stack, conventions, glossary, tracker), and propose a diff —
+new entries to add, stale entries to update or drop. Preserve manual edits and unresolved
+`TODO:` lines; never silently overwrite. Then apply the confirmed changes and stop (skip the
+steps below).
+
+Otherwise, create it:
 
 1. Gather context, in this priority order:
    a. Read the current repo (README, package manifests, existing docs/, code structure).

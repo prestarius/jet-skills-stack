@@ -43,6 +43,8 @@ The plugin `name` namespaces components, e.g. `/jet-skills:architect-review`.
 | [`adr`](skills/adr/SKILL.md) | full | Author Architecture Decision Records, one per decision. |
 | [`tradeoff-table`](skills/tradeoff-table/SKILL.md) | full | Side-by-side option comparison with a clear recommendation. |
 | [`obsidian-note`](skills/obsidian-note/SKILL.md) | full | Generate a complete Obsidian note in the house schema. |
+| [`meeting-notes`](skills/meeting-notes/SKILL.md) | full | Transcript/raw notes → structured minutes (decisions, actions, open questions), routed to obsidian-note / adr / to-issues. |
+| [`postmortem`](skills/postmortem/SKILL.md) | full | Blameless incident postmortem: timeline, contributing factors, follow-up actions ready for to-issues. |
 | [`interview-guide`](skills/interview-guide/SKILL.md) | full | Technical interview guide with rubric and evaluation template. |
 | [`eval-tool`](skills/eval-tool/SKILL.md) | full | Evaluate/recommend a tool or model with mandatory web research. |
 | [`simplicity-review`](skills/simplicity-review/SKILL.md) | full | Flag over-engineering and propose the simpler alternative. |
@@ -70,24 +72,29 @@ The plugin `name` namespaces components, e.g. `/jet-skills:architect-review`.
 
 | Command | What it does |
 |---|---|
-| [`/bootstrap-context`](commands/bootstrap-context.md) | Write this repo's `CONTEXT.md` (the company-agnostic mechanism). |
+| [`/bootstrap-context`](commands/bootstrap-context.md) | Write or refresh this repo's `CONTEXT.md` (the company-agnostic mechanism). |
 | [`/architect-review`](commands/architect-review.md) | Review a design/PR as a Staff Solution Architect. |
 | [`/scope-review`](commands/scope-review.md) | Challenge and right-size a plan's scope before building (4 modes). |
 | [`/ea-briefing`](commands/ea-briefing.md) | Enterprise-Architecture briefing with governance questions. |
-| [`/security-review`](commands/security-review.md) | OWASP Top 10 + STRIDE security pass. |
+| [`/threat-model`](commands/threat-model.md) | OWASP Top 10 + STRIDE threat analysis of a design or code path (named to avoid the bundled `/security-review` skill). |
+| [`/status-report`](commands/status-report.md) | Stakeholder status update from git history + conversation (PL/EN per audience). |
 | [`/cost-forecast`](commands/cost-forecast.md) | Forecast LLM workload cost (web-researched pricing). |
 | [`/spec`](commands/spec.md) | Thin wrapper → the `to-cc-spec` skill. |
-| [`/adr`](commands/adr.md) | Thin wrapper → the `adr` skill. |
+
+Skills are directly invocable as `/<skill-name>` (commands and skills are merged in current
+Claude Code), so skills don't get wrapper commands; `/spec` exists only to shorten
+`/to-cc-spec`.
 
 ## Hooks
 
 `hooks/scripts/command-guardrails.sh` is a `PreToolUse` hook that guards destructive shell commands
 in three tiers:
 
-- **Block** — catastrophic commands are refused outright: force push, `git reset --hard`, `rm -rf`
+- **Block** — catastrophic commands are refused outright: force push, `rm -rf`
   of `/` / `~` / a system directory, `mkfs`, `dd` to a device, `DROP DATABASE`.
 - **Ask** — recoverable-but-dangerous commands prompt for a confirmation you can override: `rm -rf`
-  of other paths, `git clean -fd`, `git checkout .` / `restore .`, `git branch -D`,
+  of other paths, `git reset --hard`, `git stash drop/clear`, `git clean -fd`,
+  `git checkout .` / `restore .`, `git branch -D`, `find … -delete`,
   `docker system prune`, `kubectl delete`, `DROP TABLE`, `TRUNCATE`.
 - **Allow** — safe cleanups pass silently: `rm -rf` of build artifacts (`node_modules`, `dist`,
   `__pycache__`, `bin`/`obj`, `.venv`, …), non-recursive `rm`, and read-only git.
@@ -97,7 +104,9 @@ Hooks are **not** auto-installed (they edit `settings.json`); `install.sh` print
 ## Adding a skill
 
 See [`docs/conventions.md`](docs/conventions.md) for how to add skills/commands and the
-full-vs-stub policy.
+full-vs-stub policy. Before committing any change, run [`scripts/validate.sh`](scripts/validate.sh)
+— it checks skill frontmatter, bundled-file references, JSON/shell syntax, the guardrail hook,
+and README links.
 
 ## Credits
 

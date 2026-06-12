@@ -7,6 +7,6 @@ take the stack, domain, and constraints from `./CONTEXT.md` rather than assuming
 
 Review `$ARGUMENTS` across: (1) simplicity / over-engineering — invoke the simplicity-review
 skill; (2) scalability & failure modes; (3) event-driven boundaries (sync vs async, outbox/saga
-where relevant); (4) security (delegate to /security-review if deep); (5) cost & operational
+where relevant); (4) security (delegate to /threat-model if deep); (5) cost & operational
 burden; (6) EU data residency / GDPR. End with a prioritized list (must-fix / should-fix /
 nice-to-have) and, if a real decision was made, offer to capture it via the adr skill.
