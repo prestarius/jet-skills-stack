@@ -1,6 +1,7 @@
 ---
 name: improve-codebase-architecture
 description: Proactively survey a codebase and surface the highest-leverage architectural improvements, framed in the project's own domain language and captured as decision records. Use whenever the user asks "how should this be structured", "where's the architectural debt", "what should we refactor first", is planning a modernization, or wants an architecture health-check rather than a line-by-line review.
+effort: high
 ---
 
 Find the architectural improvements that matter, prioritized — don't rewrite anything.

@@ -1,6 +1,7 @@
 ---
 name: grill-me
 description: Interview the user relentlessly about a plan or idea, one sharp question at a time, recommending an answer each time. Use whenever the user wants to pressure-test a plan, says "grill me", "poke holes in this", or is about to commit to an approach and wants it stress-tested first.
+effort: high
 ---
 
 Stress-test the plan by interrogating it — one question at a time, hardest assumptions first.

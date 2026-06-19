@@ -1,6 +1,7 @@
 ---
 name: tradeoff-table
 description: Produce a side-by-side option comparison table with a clear recommendation. Use whenever the user is weighing approaches/tools/architectures ("X vs Y", "which should we use", "compare these options", "build vs buy") and would benefit from a structured tradeoff matrix rather than prose.
+effort: high
 ---
 
 Output a Markdown table: columns = the candidate options, rows = decision criteria.

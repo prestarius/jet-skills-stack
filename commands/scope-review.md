@@ -1,6 +1,7 @@
 ---
 description: Challenge and right-size the scope of a feature, plan, or idea before any code is written — using four explicit modes (Expansion / Selective / Hold / Reduction).
 argument-hint: "[the feature, plan, or idea to scope]"
+effort: high
 ---
 Read `./CONTEXT.md` if present. Adopt founder-grade product-and-engineering judgment: lead with
 outcomes (what the user can now see, do, or stop waiting for), name concrete problems, cut corporate
