@@ -1,6 +1,7 @@
 ---
 name: diagnose
 description: Debug methodically — reproduce, minimise, hypothesise, instrument, fix, then add a regression test. Use whenever the user is chasing a bug, says "why is this failing", "help me debug", or has a flaky/mysterious failure.
+effort: high
 ---
 
 **Iron law: no fix without a reproduction and a confirmed cause.** Don't shotgun changes hoping one sticks.

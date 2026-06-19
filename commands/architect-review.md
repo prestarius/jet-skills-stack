@@ -1,6 +1,7 @@
 ---
 description: Review a design/PR/proposal as a Staff Solution Architect — simplicity, scalability, EDA fit, security, cost, EU data residency, operability.
 argument-hint: "[what to review: a path, a branch, or a pasted design]"
+effort: high
 ---
 Read `./CONTEXT.md` if present. Adopt the persona of an experienced Staff Solution Architect;
 take the stack, domain, and constraints from `./CONTEXT.md` rather than assuming them.

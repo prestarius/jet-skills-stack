@@ -67,6 +67,8 @@ The plugin `name` namespaces components, e.g. `/jet-skills:architect-review`.
 | [`handoff`](skills/handoff/SKILL.md) | full | Compact the conversation into a handoff doc. |
 | [`caveman`](skills/caveman/SKILL.md) | full | Ultra-compressed comms; fewer tokens, same accuracy. |
 | [`write-a-skill`](skills/write-a-skill/SKILL.md) | full | Create new skills with proper structure + progressive disclosure. |
+| [`power-phrase`](skills/power-phrase/SKILL.md) | full | Orchestrate a build session with the 6 Power Phrases framework, routing each phase to the stack's native skill. |
+| [`headless-loop`](skills/headless-loop/SKILL.md) | full | Generate ready-to-run headless Claude Code automation loops (shell batch, feedback gate, Agent SDK). |
 
 ## Commands
 

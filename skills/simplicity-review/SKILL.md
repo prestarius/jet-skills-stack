@@ -1,6 +1,7 @@
 ---
 name: simplicity-review
 description: Review a design or proposal for over-engineering and articulate the simpler alternative, optionally as a friendly peer-review message. Use whenever the user wants a sanity check on a design, suspects something is over-built, is reviewing a colleague's proposal, or asks "is this too complex?" / "how would you simplify this?".
+effort: high
 ---
 
 Apply simplicity-first rigorously but kindly.
