@@ -2,6 +2,8 @@
 name: improve-codebase-architecture
 description: Proactively survey a codebase and surface the highest-leverage architectural improvements, framed in the project's own domain language and captured as decision records. Use whenever the user asks "how should this be structured", "where's the architectural debt", "what should we refactor first", is planning a modernization, or wants an architecture health-check rather than a line-by-line review.
 effort: high
+context: fork
+agent: solution-architect
 ---
 
 Find the architectural improvements that matter, prioritized — don't rewrite anything.
@@ -21,8 +23,10 @@ Find the architectural improvements that matter, prioritized — don't rewrite a
    - **Effort / risk** — rough size and what could break.
 4. **Prioritize.** Order by leverage = (pain relieved) ÷ (effort + risk). Lead with the one or two
    that unblock the most future work. Be explicit that the rest can wait.
-5. **Record the decision.** For any improvement the user commits to, offer to capture the direction
+5. **Record the decision.** For any improvement the user commits to, capture the direction
    as an ADR via the `adr` skill (one decision per record, with the rejected alternatives).
+   This skill runs in a forked subagent: return the prioritized findings; ADR-writing happens
+   in the main session once the user picks what to commit to.
 
 Stay surgical: this skill *recommends*, it does not refactor. Flag pre-existing issues; never edit
 adjacent code unasked. If the architecture is genuinely fine, say so plainly rather than inventing work.

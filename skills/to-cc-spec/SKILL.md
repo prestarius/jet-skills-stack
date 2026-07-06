@@ -1,6 +1,6 @@
 ---
 name: to-cc-spec
-description: Turn the current conversation (a design, idea, or half-finished plan) into a self-contained Claude Code–ready implementation spec / handoff document that a fresh agent can execute without the chat. Use whenever the user says "write a spec", "make this Claude Code–ready", "hand this off", "turn this into an implementation plan", or is about to delegate a build to another agent.
+description: Turn the current conversation (a design, idea, or half-finished plan) into a self-contained Claude Code–ready implementation spec that a fresh agent can execute without the chat. Use whenever the user says "write a spec", "make this Claude Code–ready", "turn this into an implementation plan", or is about to delegate a build to another agent. For a session-continuity snapshot ("summarise where we are", pick up in a fresh session) use the handoff skill instead — this one specs a build, it doesn't compact a conversation.
 ---
 
 Produce ONE Markdown file a fresh Claude Code agent can execute end-to-end with no access to this conversation. Name it `<THING>_SPEC.md` in SCREAMING_SNAKE.

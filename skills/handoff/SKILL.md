@@ -1,6 +1,6 @@
 ---
 name: handoff
-description: Compact the current conversation into a handoff document another agent can pick up cold. Use whenever the user says "hand this off", "summarise where we are", is running low on context, or wants to continue work in a fresh session.
+description: Compact the current conversation into a handoff document another agent can pick up cold. Use whenever the user says "hand this off", "summarise where we are", is running low on context, or wants to continue work in a fresh session. For an executable implementation spec to delegate a build, use the to-cc-spec skill instead — this one preserves session state, it doesn't spec new work.
 ---
 
 Write a self-contained handoff a fresh agent can resume from with **no access to this conversation**.

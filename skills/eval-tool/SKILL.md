@@ -1,6 +1,6 @@
 ---
 name: eval-tool
-description: Evaluate and recommend a tool, model, framework, or library with mandatory up-to-date web research. Use whenever the user asks "which X should I use", "is X any good", "evaluate X vs Y for us", or any tooling/model/library selection — never answer these from memory alone.
+description: Evaluate and recommend a tool, model, framework, or library with mandatory up-to-date web research. Use whenever the user asks "which X should I use", "is X any good", "evaluate X vs Y for us", or any tooling/model/library selection — never answer these from memory alone. This skill picks ONE winner; for a cited landscape survey use market-research, for a bare comparison matrix of options already known use tradeoff-table.
 ---
 
 **Hard rule: web-search current facts first.** Versions, pricing, maintenance status, and

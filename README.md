@@ -69,6 +69,9 @@ The plugin `name` namespaces components, e.g. `/jet-skills:architect-review`.
 | [`write-a-skill`](skills/write-a-skill/SKILL.md) | full | Create new skills with proper structure + progressive disclosure. |
 | [`power-phrase`](skills/power-phrase/SKILL.md) | full | Orchestrate a build session with the 6 Power Phrases framework, routing each phase to the stack's native skill. |
 | [`headless-loop`](skills/headless-loop/SKILL.md) | full | Generate ready-to-run headless Claude Code automation loops (shell batch, feedback gate, Agent SDK). |
+| [`design-doc`](skills/design-doc/SKILL.md) | full | Author a pre-decision design document / RFC — problem, requirements, options, proposed design; upstream of adr and to-cc-spec. |
+| [`migration-plan`](skills/migration-plan/SKILL.md) | full | Phase a modernization: current → target with a coexistence mechanism, exit criteria, and rollback per phase. |
+| [`estimate`](skills/estimate/SKILL.md) | full | Effort estimation with explicit assumptions and confidence ranges — never a single confident number. |
 
 ## Commands
 
@@ -86,6 +89,16 @@ The plugin `name` namespaces components, e.g. `/jet-skills:architect-review`.
 Skills are directly invocable as `/<skill-name>` (commands and skills are merged in current
 Claude Code), so skills don't get wrapper commands; `/spec` exists only to shorten
 `/to-cc-spec`.
+
+## Agents
+
+| Agent | What it does |
+|---|---|
+| [`solution-architect`](agents/solution-architect.md) | Staff Solution Architect persona for deep design review; also hosts forked `improve-codebase-architecture` runs. |
+| [`researcher`](agents/researcher.md) | Web-research fan-out with mandatory citations; hosts forked `market-research` runs. |
+
+Heavy analysis skills (`improve-codebase-architecture`, `market-research`, `skill-stocktake`) declare
+`context: fork` and run in a subagent, keeping the main session's context clean.
 
 ## Hooks
 

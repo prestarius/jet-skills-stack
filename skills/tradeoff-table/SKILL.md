@@ -1,6 +1,6 @@
 ---
 name: tradeoff-table
-description: Produce a side-by-side option comparison table with a clear recommendation. Use whenever the user is weighing approaches/tools/architectures ("X vs Y", "which should we use", "compare these options", "build vs buy") and would benefit from a structured tradeoff matrix rather than prose.
+description: Produce a side-by-side option comparison table with a clear recommendation. Use whenever the user is weighing approaches/tools/architectures ("X vs Y", "which should we use", "compare these options", "build vs buy") and would benefit from a structured tradeoff matrix rather than prose. This skill structures a comparison of known candidates; for a research-backed single tool pick use eval-tool, for surveying who the candidates even are use market-research.
 effort: high
 ---
 

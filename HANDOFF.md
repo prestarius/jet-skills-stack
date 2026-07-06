@@ -20,7 +20,15 @@ Repo: `github.com/prestarius/jet-skills-stack`, branch `master`.
 - Broadened the guard hook → `hooks/scripts/command-guardrails.sh` (block / ask / allow tiers).
 
 ## Current state
-- **30 full skills (0 stubs), 8 commands, 1 agent, 1 guardrail hook.** README tables + credits in sync.
+- **35 full skills (0 stubs), 8 commands, 2 agents, 1 guardrail hook.** README tables + credits in sync.
+- 2026-07-06 revision: sharpened the `handoff` / `to-cc-spec` trigger split (removed the shared
+  "hand this off" phrase); added mutual routing lines across the `eval-tool` / `tradeoff-table` /
+  `market-research` trio; heavy analysis skills now run forked (`context: fork` — `market-research`
+  → new `researcher` agent, `improve-codebase-architecture` → `solution-architect`,
+  `skill-stocktake` → default fork); added `researcher` agent and `design-doc`, `migration-plan`,
+  `estimate` skills. Considered and rejected `disable-model-invocation` for humanizer/caveman/
+  headless-loop/power-phrase — the field makes a skill slash-only, which would break their
+  natural-language triggers; the prose "only when explicitly asked" guard is the right mechanism.
 - 2026-06-12 revision: dropped `commands/adr.md` (shadowed — skills are slash-invocable and take
   precedence over same-name commands); renamed `/security-review` → `/threat-model` (collided with
   the bundled Claude Code skill); fixed `epic-numbering` frontmatter name to match its directory;
@@ -32,7 +40,7 @@ Repo: `github.com/prestarius/jet-skills-stack`, branch `master`.
 - None blocking.
 
 ## Next steps
-1. (Optional) Run the **`skill-stocktake`** skill over `skills/` to catch overlap/drift at 28 skills.
+1. (Optional) Run the **`skill-stocktake`** skill over `skills/` to catch overlap/drift at 35 skills.
 2. New component → write/update → validate (below) → update README tables/credits → commit when asked → `git push origin master`.
 
 ## Gotchas (read before changing anything)

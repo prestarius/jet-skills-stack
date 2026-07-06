@@ -1,6 +1,7 @@
 ---
 name: skill-stocktake
 description: Audit a collection of Claude Code skills for overlap, stale technical references, and name/trigger/scope drift, then recommend keep / improve / update / retire / merge for each. Use whenever the user wants to review, clean up, or take stock of their skills ("audit my skills", "are these overlapping", "stocktake", "which skills are stale"), especially as the collection grows.
+context: fork
 ---
 
 Keep the skill collection sharp: no duplicates, no stale references, no skills that won't trigger.
@@ -23,6 +24,7 @@ skill). For larger sets, evaluate in batches and report progress.
    **Retire** (no longer useful) · **Merge into `<skill>`** (resolve an overlap).
 4. **Consolidate and confirm.** For every non-Keep verdict, give the concrete justification and the
    proposed change. **Confirm with the user before editing or deleting anything** — never retire or
-   merge a skill unprompted (surgical-changes guardrail).
+   merge a skill unprompted (surgical-changes guardrail). This skill runs in a forked subagent:
+   report the verdicts and proposed changes back; the main session confirms and applies them.
 
 No telemetry or usage metrics — this audits content quality and correctness, not how often a skill ran.
