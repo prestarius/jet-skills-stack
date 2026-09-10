@@ -16,6 +16,11 @@ installable via `./install.sh`. Repo: `github.com/prestarius/jet-skills-stack`, 
 - 2026-09-10 audit (`BACKLOG.md`) and the first implementation pass — see "Current state".
 
 ## Current state (2026-09-10, verified against Claude Code 2.1.267)
+- **Released 0.2.0**: commit `fda05f1` on `master`, pushed; annotated tag `jet-skills--v0.2.0`
+  on origin (`claude plugin tag --push`). Working tree clean.
+- **Installed on this machine** via `./install.sh --personal --hooks`: 42 skill symlinks, both
+  rules linked, old marker block removed from `~/.claude/CLAUDE.md` (now empty; backup
+  `CLAUDE.md.bak`), both guard hooks in `~/.claude/settings.json` (backup `settings.json.bak`).
 - **42 skills (33 model-invocable, 9 user-started), 2 agents, 3 hook scripts, 2 rules files,
   6 eval cases.** No `commands/` directory any more (ADR 0002).
 - Working agreement ships as `rules/working-agreement.md` → `~/.claude/rules/` (installer) or a
@@ -41,13 +46,16 @@ installable via `./install.sh`. Repo: `github.com/prestarius/jet-skills-stack`, 
   shape follows the plugins reference but a first run may need field fixes.
 
 ## Next steps
-1. Run `./install.sh --personal --hooks` on this machine: it prunes the dangling `~/.claude/commands/*`
-   and `epic-numbering` symlinks, links the rules, and installs the hooks. Then `/context` to
-   confirm the rule loaded and the hidden skills are absent from the listing.
-2. Run `scripts/eval.sh 'handoff*'` once; fix the case format if the CLI rejects it.
+1. In a fresh session: `/context` should list `jet-working-agreement.md` and
+   `jet-personal-defaults.md` under Memory files; `/hooks` should show the two PreToolUse
+   entries; the 9 user-started skills should be absent from Claude's skill listing. Check the
+   GitHub Actions run for commit `fda05f1` (first run of `.github/workflows/validate.yml`).
+2. Run `scripts/eval.sh 'handoff*'` once; fix the `case.yaml` shape if the CLI rejects it.
 3. Remaining backlog: 3.3.3 (agent memory), 3.4 (spec `compatibility`/`metadata` fields, `npx skills`
    check), 5.3 (changelog-watch routine), 3.1.3 (`/skill-doctor` review after two weeks).
-4. Commit when asked; `claude plugin tag --dry-run` before tagging 0.2.0.
+4. Delete `~/.claude/CLAUDE.md.bak` and `~/.claude/settings.json.bak` once the new session checks out.
+5. Update procedure from now on: `git pull && ./install.sh` (idempotent). Releases: bump
+   `plugin.json` version, `claude plugin tag --dry-run .`, then `claude plugin tag --push .`.
 
 ## Gotchas (read before changing anything)
 - **Identity:** the author/persona is **Jet** only. The user's real legal name must NEVER appear in any
