@@ -1,6 +1,6 @@
 # jet-skills backlog
 
-**Status 2026-09-10 (evening): first implementation pass done — 47 of 52 items ✅, uncommitted.** Left open: 3.1.3 (needs two weeks of `/skill-doctor` data), 3.3.3 (decision), 3.4.1–3.4.2, 5.1.2, 5.3.1. Notes: 4.4.1 checked — upstream now has 25 patterns in a different taxonomy, not a superset; no port. `claude plugin details` ignores `disable-model-invocation`, so `validate.sh` now estimates the always-on cost from model-visible descriptions instead. Baseline: local Claude Code
+**Status 2026-09-10 (late): 50 of 52 items ✅, 1 decided-no-change (3.3.3), released as 0.2.0 + follow-ups.** Left open: 3.1.3 (due 2026-09-24, needs `/skill-doctor` data) and 5.1.2 (blocked on an interactive skill-creator session and the `plugin eval` early-access gate). Notes: 4.4.1 checked — upstream now has 25 patterns in a different taxonomy, not a superset; no port. `claude plugin details` ignores `disable-model-invocation`, so `validate.sh` now estimates the always-on cost from model-visible descriptions instead. Baseline: local Claude Code
 **2.1.267**, docs at code.claude.com dated 2026-09-09, Agent Skills spec at agentskills.io.
 Inputs: every file in `skills/`, `commands/`, `agents/`, `hooks/`, `install.sh`,
 `scripts/validate.sh`; `claude plugin validate .` and `claude plugin details jet-skills`;
@@ -109,7 +109,7 @@ Context: `disable-model-invocation: true` now hides the description entirely (ve
 
 - ✅ **3.1.1 — `headless-loop` and `power-phrase`: set `disable-model-invocation: true`** (P1). Both bodies already say "only when explicitly asked"; both are naturally typed as `/headless-loop`, `/power-phrase`. Saves ~420 tokens per session and removes the two biggest on-invoke bodies from accidental triggering.
 - ✅ **3.1.2 — Decide `humanizer` and `caveman`** (P2, decision). Recommendation: `humanizer` stays model-invocable (the "this sounds too AI" phrasing is a real trigger and the skill is a top-installed category). `caveman` becomes `disable-model-invocation: true` or is retired: the JetBrains A/B (86 tasks, ~240 trials) found −8.5 % output tokens and no quality change, and the mode's own rules cost input tokens every turn.
-- **3.1.3 — Two-week `/skill-doctor` review** (P2). After the migration in US 3.2, run `/skill-doctor`, retire or hide anything never invoked, and record the result in HANDOFF.md.
+- **3.1.3 — Two-week `/skill-doctor` review** (P2, due 2026-09-24). After the migration in US 3.2, run `/skill-doctor`, retire or hide anything never invoked, and record the result in HANDOFF.md.
 
 ### US 3.2 — `commands/` migrates to `skills/`
 
@@ -122,12 +122,12 @@ Context: `disable-model-invocation: true` now hides the description entirely (ve
 
 - ✅ **3.3.1 — `researcher`: `tools: WebSearch, WebFetch, Read, Grep, Glob`, `model: sonnet`, `maxTurns: 40`, `color: cyan`** (P1). Today it inherits every tool including Write/Edit/Bash and runs on the session model; fan-out research is the most token-hungry thing in the stack (the research fork for this audit hit a rate limit).
 - ✅ **3.3.2 — `solution-architect`: `disallowedTools: Write, Edit, NotebookEdit`, `effort: high`, `color: purple`** (P1). It hosts `improve-codebase-architecture`, whose body promises "recommends, does not refactor"; enforce that at the permission layer.
-- **3.3.3 — Decide persistent memory for `solution-architect`** (P2, decision). `memory: local` (`.claude/agent-memory-local/`, not committed) lets it remember a codebase's recurring issues without writing into the user's repos. `project` would commit notes into every reviewed repo; `user` would mix projects. Note `permissionMode`, `hooks`, `mcpServers` are ignored in plugin agents, so don't add them.
+- ⏭ **3.3.3 — Decide persistent memory for `solution-architect`** (P2, decision). `memory: local` (`.claude/agent-memory-local/`, not committed) lets it remember a codebase's recurring issues without writing into the user's repos. `project` would commit notes into every reviewed repo; `user` would mix projects. Note `permissionMode`, `hooks`, `mcpServers` are ignored in plugin agents, so don't add them. _Decided 2026-09-10: no memory. Enabling it grants Write/Edit for the memory dir, which conflicts with the read-only `disallowedTools` from 3.3.2, and `local`/`project` scopes write into every reviewed repo. Revisit if scoped memory writes become compatible with `disallowedTools`._
 
 ### US 3.4 — Portability to the Agent Skills standard
 
-- **3.4.1 — Declare Claude-only fields** (P2). Skills using `context`, `agent`, `effort`, `model`, `disable-model-invocation` get `compatibility: "Claude Code 2.1.x (context: fork, effort)"` and `metadata: {author: Jet, version: …}`. `name` + `description` are the only cross-tool triggers; Cursor and Copilot read `.claude/skills/`, Codex and Gemini do not.
-- **3.4.2 — Verify `npx skills add prestarius/jet-skills-stack`** (P2, suspected). The Vercel CLI expects skills at the repo root or `skills/`; confirm and add the one-liner to README if it works.
+- ✅ **3.4.1 — Declare Claude-only fields** (P2). Skills using `context`, `agent`, `effort`, `model`, `disable-model-invocation` get `compatibility: "Claude Code 2.1.x (context: fork, effort)"` and `metadata: {author: Jet, version: …}`. `name` + `description` are the only cross-tool triggers; Cursor and Copilot read `.claude/skills/`, Codex and Gemini do not.
+- ✅ **3.4.2 — Verify `npx skills add prestarius/jet-skills-stack`** (P2, confirmed 2026-09-10: `--list` finds all skills from `skills/`; one-liner added to README). The Vercel CLI expects skills at the repo root or `skills/`; confirm and add the one-liner to README if it works.
 
 ---
 
@@ -169,7 +169,7 @@ Context: `disable-model-invocation: true` now hides the description entirely (ve
 ### US 5.1 — Trigger and output evals for the stack
 
 - ✅ **5.1.1 — Scaffold `evals/` with `claude plugin eval` cases for the collision-prone sets** (P1). `eval-tool` vs `tradeoff-table` vs `market-research`; `handoff` vs `to-cc-spec`; `grill-me` vs `grill-with-docs`; `design-doc` vs `adr`. Each case: `prompt.md` + `graders/` with `tool_used: Skill` (which skill fired) and one `llm` rubric on the output shape. `--ablation with-without` gives the no-skill baseline for free.
-- **5.1.2 — Description tuning with skill-creator** (P2). `/plugin install skill-creator@claude-plugins-official`, generate should / shouldn't-trigger prompts for the routing trio, measure hit rate, edit descriptions.
+- **5.1.2 — Description tuning with skill-creator** (P2, blocked). _Needs an interactive session: install `skill-creator@claude-plugins-official`, then ask it to evaluate `eval-tool`; also gated until `claude plugin eval` early access reaches this account._ `/plugin install skill-creator@claude-plugins-official`, generate should / shouldn't-trigger prompts for the routing trio, measure hit rate, edit descriptions.
 - ✅ **5.1.3 — `scripts/eval.sh`** (P2). Wraps `claude plugin eval . --max-cost-usd 2 --json evals/results/latest.json`. Manual, not in validate.sh or CI.
 
 ### US 5.2 — `release-notes` skill
@@ -178,7 +178,7 @@ Context: `disable-model-invocation: true` now hides the description entirely (ve
 
 ### US 5.3 — Changelog watch routine
 
-- **5.3.1 — Weekly `/schedule` routine that diffs the Claude Code changelog against `metadata.verified_against`** (P2). Reuse the cc-tutor docs-scout keyword map; output a short "possibly stale" list per skill. This is the mechanism that prevents the drift this audit found.
+- ✅ **5.3.1 — Weekly `/schedule` routine that diffs the Claude Code changelog against `metadata.verified_against`** (P2). _Shipped as the user-started `changelog-watch` skill (+ `references/keyword-map.md`); schedule it with `/schedule` → `/changelog-watch` or `/loop 7d /changelog-watch`._ Reuse the cc-tutor docs-scout keyword map; output a short "possibly stale" list per skill. This is the mechanism that prevents the drift this audit found.
 
 ---
 

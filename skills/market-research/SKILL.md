@@ -3,6 +3,7 @@ name: market-research
 description: Research a market, landscape, or set of players and produce source-attributed findings — every claim cited, recency noted. Use whenever the user asks "what's the state of X", "who are the players in Y", "competitive landscape", "market research", "survey the options for Z", or needs a grounded overview. This skill surveys, it doesn't pick — for a single tool recommendation use eval-tool, for a decision matrix over known options use tradeoff-table.
 context: fork
 agent: researcher
+compatibility: "Claude Code (uses context, agent); name + description work in any Agent Skills tool"
 ---
 
 **Hard rule: web-search current facts and cite every claim.** A market overview built from memory is

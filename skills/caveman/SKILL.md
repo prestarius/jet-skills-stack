@@ -2,6 +2,7 @@
 name: caveman
 description: Switch to ultra-compressed communication that cuts tokens while keeping accuracy. Invoke as /caveman when you want maximally compact responses without losing correctness.
 disable-model-invocation: true
+compatibility: "Claude Code (uses disable-model-invocation); name + description work in any Agent Skills tool"
 ---
 
 Compressed comms mode. Cut tokens, keep correctness. Stay in mode until told to stop.

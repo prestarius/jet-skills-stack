@@ -2,6 +2,7 @@
 name: release-notes
 description: Turn git history since a tag or date into a changelog entry or release notes grouped by change type, in the project's changelog format. Use whenever the user asks for "release notes", "changelog", "what's in this release", "write the CHANGELOG entry", or is tagging a version. For a stakeholder progress update use status-report instead.
 argument-hint: "[range or tag, e.g. v1.2.0..HEAD, or 'since last release']"
+compatibility: "Claude Code (uses argument-hint); name + description work in any Agent Skills tool"
 ---
 
 Write release notes from what actually shipped, not from commit messages verbatim.

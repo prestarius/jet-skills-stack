@@ -3,6 +3,7 @@ name: bootstrap-context
 description: Set up or refresh this repo's project context — writes a local CONTEXT.md so every other skill has company/domain specifics (glossary, stack, conventions, tracker, compliance) without anything being hardcoded.
 argument-hint: "[optional: path to a brief or existing docs]"
 disable-model-invocation: true
+compatibility: "Claude Code (uses disable-model-invocation, argument-hint); name + description work in any Agent Skills tool"
 ---
 You are setting up per-project context for this repository. Nothing about the user's
 employer/client is hardcoded in this stack — it lives only in the CONTEXT.md you create.

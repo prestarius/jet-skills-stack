@@ -35,6 +35,16 @@ claude --plugin-dir .                 # load for one session
 
 The plugin `name` namespaces components, e.g. `/jet-skills:architect-review`.
 
+**Skills only, any Agent-Skills tool** (Cursor, Codex, Copilot, Gemini CLI, …):
+
+```bash
+npx skills add prestarius/jet-skills-stack --list   # see the 43 skills
+npx skills add prestarius/jet-skills-stack -s adr -s tdd -s diagnose
+```
+
+Only `name` and `description` travel; Claude-only fields (`effort`, `context: fork`,
+`disable-model-invocation`, …) are declared in each skill's `compatibility` line and ignored elsewhere.
+
 | What | `install.sh` | plugin |
 |---|---|---|
 | skills, agents | symlinked | installed copy |
@@ -92,6 +102,7 @@ their descriptions cost no context.
 | [`/architect-review`](skills/architect-review/SKILL.md) | Review a design/PR as a Staff Solution Architect. |
 | [`/bootstrap-context`](skills/bootstrap-context/SKILL.md) | Write or refresh this repo's `CONTEXT.md` (the company-agnostic mechanism). |
 | [`/caveman`](skills/caveman/SKILL.md) | Ultra-compressed comms; fewer tokens, same accuracy. |
+| [`/changelog-watch`](skills/changelog-watch/SKILL.md) | Diff the Claude Code changelog since `metadata.verified_against` and list possibly-stale components; schedule it weekly. |
 | [`/cost-forecast`](skills/cost-forecast/SKILL.md) | Forecast LLM workload cost (web-researched pricing). |
 | [`/ea-briefing`](skills/ea-briefing/SKILL.md) | Enterprise-Architecture briefing with governance questions (PL↔EN). |
 | [`/headless-loop`](skills/headless-loop/SKILL.md) | Ready-to-run headless loops (shell batch, feedback gate, Agent SDK) — after checking `/goal`, `/batch`, `/loop`, `/schedule` don't already cover it. |

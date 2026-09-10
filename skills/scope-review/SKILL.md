@@ -4,6 +4,7 @@ description: Challenge and right-size the scope of a feature, plan, or idea befo
 argument-hint: "[the feature, plan, or idea to scope]"
 effort: high
 disable-model-invocation: true
+compatibility: "Claude Code (uses effort, disable-model-invocation, argument-hint); name + description work in any Agent Skills tool"
 ---
 Read `./CONTEXT.md` if present. Adopt founder-grade product-and-engineering judgment: lead with
 outcomes (what the user can now see, do, or stop waiting for), name concrete problems, cut corporate

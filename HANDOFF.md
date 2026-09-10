@@ -22,8 +22,12 @@ installable via `./install.sh`. Repo: `github.com/prestarius/jet-skills-stack`, 
 - **Installed on this machine** via `./install.sh --personal --hooks`: 42 skill symlinks, both
   rules linked, old marker block removed from `~/.claude/CLAUDE.md` (now empty; backup
   `CLAUDE.md.bak`), both guard hooks in `~/.claude/settings.json` (backup `settings.json.bak`).
-- **42 skills (33 model-invocable, 9 user-started), 2 agents, 3 hook scripts, 2 rules files,
-  6 eval cases.** No `commands/` directory any more (ADR 0002).
+- **43 skills (33 model-invocable, 10 user-started), 2 agents, 3 hook scripts, 2 rules files,
+  6 eval cases.** No `commands/` directory any more (ADR 0002). Every skill that uses a
+  Claude-only frontmatter field carries a `compatibility:` line; `npx skills add
+  prestarius/jet-skills-stack` lists all skills (verified 2026-09-10).
+- `changelog-watch` (user-started) diffs the changelog against `metadata.verified_against` using
+  `references/keyword-map.md`; schedule with `/schedule` → `/changelog-watch`.
 - Working agreement ships as `rules/working-agreement.md` → `~/.claude/rules/` (installer) or a
   `SessionStart` hook (plugin, `working_agreement` userConfig). Personal defaults in
   `rules/personal-defaults.md`, `install.sh --personal`. Root `CLAUDE.md` imports the agreement
@@ -38,8 +42,9 @@ installable via `./install.sh`. Repo: `github.com/prestarius/jet-skills-stack`, 
 - Plugin 0.2.0; `metadata.verified_against` = 2.1.267.
 
 ## Open decisions
-- `solution-architect` persistent memory (BACKLOG 3.3.3): `memory: local` writes
-  `.claude/agent-memory-local/` into reviewed repos; not enabled.
+- `solution-architect` persistent memory (BACKLOG 3.3.3): decided **no** — memory grants
+  Write/Edit for its directory, conflicting with the agent's read-only `disallowedTools`, and
+  project/local scopes write into reviewed repos.
 - `claude plugin details` reported ~5,037 always-on tokens after hiding 13 descriptions, barely
   down from 5,063 — the estimator may ignore `disable-model-invocation`. Confirm with `/context`
   or `/skill-doctor` in a live session before trusting the validator's budget check.
@@ -59,8 +64,9 @@ installable via `./install.sh`. Repo: `github.com/prestarius/jet-skills-stack`, 
 2. After `claude update`, in a fresh session try `scripts/eval.sh 'handoff*'`; if it still prints
    the early-access line the flag has not reached the account. On the first real run fix any
    frontmatter the CLI rejects (see Open decisions).
-3. Remaining backlog: 3.3.3 (agent memory), 3.4 (spec `compatibility`/`metadata` fields, `npx skills`
-   check), 5.3 (changelog-watch routine), 3.1.3 (`/skill-doctor` review after two weeks).
+3. Remaining backlog: 3.1.3 (`/skill-doctor` review, due 2026-09-24) and 5.1.2 (skill-creator
+   description tuning; needs an interactive session and the eval early-access flag). Everything
+   else in `BACKLOG.md` is done or decided.
 4. Delete `~/.claude/CLAUDE.md.bak` and `~/.claude/settings.json.bak` once the new session checks out.
 5. Update procedure from now on: `git pull && ./install.sh` (idempotent). Releases: bump
    `plugin.json` version, `claude plugin tag --dry-run .`, then `claude plugin tag --push .`.

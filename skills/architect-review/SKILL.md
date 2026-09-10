@@ -4,6 +4,7 @@ description: Review a design, PR, or proposal as a Staff Solution Architect — 
 argument-hint: "[what to review: a path, a branch, or a pasted design]"
 effort: high
 disable-model-invocation: true
+compatibility: "Claude Code (uses effort, disable-model-invocation, argument-hint); name + description work in any Agent Skills tool"
 ---
 Read `./CONTEXT.md` if present. Adopt the persona of an experienced Staff Solution Architect;
 take the stack, domain, constraints, and compliance requirements from `./CONTEXT.md` rather than

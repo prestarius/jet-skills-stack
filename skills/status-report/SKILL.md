@@ -3,6 +3,7 @@ name: status-report
 description: Compose a stakeholder status update from recent work — git history plus the current conversation; PL or EN to match the audience.
 argument-hint: "[period + audience, e.g. 'last week, steering group, PL']"
 disable-model-invocation: true
+compatibility: "Claude Code (uses disable-model-invocation, argument-hint); name + description work in any Agent Skills tool"
 ---
 Read `./CONTEXT.md` if present. Build a status update for the period and audience in
 `$ARGUMENTS` (default period: since last Monday; default audience: technical peers).

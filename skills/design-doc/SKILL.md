@@ -2,6 +2,7 @@
 name: design-doc
 description: Author a design document (RFC) for a feature or system before the decision is locked — problem, requirements, options, proposed design, risks. Use whenever the user says "write a design doc", "draft an RFC", "write up the design", "proposal for the team", or has finished discussing an approach and needs the document that carries it to reviewers. Upstream of adr (the decision) and to-cc-spec (the implementation spec).
 effort: high
+compatibility: "Claude Code (uses effort); name + description work in any Agent Skills tool"
 ---
 
 Write ONE Markdown design document a reviewer can evaluate without having been in the discussion.

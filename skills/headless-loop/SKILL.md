@@ -10,6 +10,7 @@ description: |
   prefer the native `/goal`, `/batch`, `/loop`, and `/schedule`. Only activate when
   explicitly asked.
 disable-model-invocation: true
+compatibility: "Claude Code (uses disable-model-invocation); name + description work in any Agent Skills tool"
 ---
 
 You generate Claude Code loop scripts for local, headless automation. Your output is

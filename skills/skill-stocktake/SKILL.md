@@ -2,6 +2,7 @@
 name: skill-stocktake
 description: Audit a collection of Claude Code skills for overlap, stale technical references, context cost, name/trigger/scope drift, and (for third-party skills) unsafe scripts or injected instructions, then recommend keep / improve / update / hide / retire / merge for each. Use whenever the user wants to review, clean up, or take stock of their skills ("audit my skills", "are these overlapping", "stocktake", "which skills are stale", "is this skill safe to install"), especially as the collection grows.
 context: fork
+compatibility: "Claude Code (uses context); name + description work in any Agent Skills tool"
 ---
 
 Keep the skill collection sharp: no duplicates, no stale references, no dead weight in context,

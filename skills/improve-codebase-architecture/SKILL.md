@@ -4,6 +4,7 @@ description: Proactively survey a codebase and surface the highest-leverage arch
 effort: high
 context: fork
 agent: solution-architect
+compatibility: "Claude Code (uses effort, context, agent); name + description work in any Agent Skills tool"
 ---
 
 Find the architectural improvements that matter, prioritized — don't rewrite anything.

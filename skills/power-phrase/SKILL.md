@@ -9,6 +9,7 @@ description: |
   single phase, defer to its native skill (to-cc-spec, grill-with-docs, verify, write-a-skill,
   loop/schedule) rather than this orchestrator.
 disable-model-invocation: true
+compatibility: "Claude Code (uses disable-model-invocation); name + description work in any Agent Skills tool"
 ---
 
 A 6-phrase system for building faster and with higher quality in Claude Code.

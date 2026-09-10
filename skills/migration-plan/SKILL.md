@@ -2,6 +2,7 @@
 name: migration-plan
 description: Turn a modernization goal or architectural finding into a phased migration plan — current state to target state with coexistence, cutover criteria, and rollback per phase. Use whenever the user asks "how do we get from X to Y", "plan the migration", "phase out the legacy system", "strangler this", or commits to an improvement from improve-codebase-architecture and needs the route, not just the destination.
 effort: high
+compatibility: "Claude Code (uses effort); name + description work in any Agent Skills tool"
 ---
 
 Plan the route from current to target in phases that each leave the system working. Read
