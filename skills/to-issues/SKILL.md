@@ -9,7 +9,7 @@ Convert a plan into issues a contributor can grab without context from this conv
    "Issue tracker" section). If it's not defined, ask once which tracker (GitHub, Jira, GitLab, Linear,
    plain Markdown) and output accordingly. Default to Markdown if unknown.
 2. **Reuse the breakdown.** If the plan already uses Epic / User Story / Task structure, keep it and
-   apply the `epic-numbering` convention; carry the IDs (`1.2.3`) into each issue as a stable reference.
+   apply the Epic / US / Task numbering from the working agreement; carry the IDs (`1.2.3`) into each issue as a stable reference.
    If it doesn't, structure it first.
 3. **Make each issue independent.** Per issue, write:
    - **Title** — imperative, specific (`Add idempotency key to payment webhook handler`).

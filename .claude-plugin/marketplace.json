@@ -1,7 +1,12 @@
 {
   "name": "jet-skills",
   "owner": { "name": "Jet" },
+  "description": "Jet's company-agnostic Claude Code stack: architect/engineering skills, role workflows, guardrails, and a per-project context bootstrap.",
   "plugins": [
-    { "name": "jet-skills", "source": ".", "description": "Architect/engineering skills + role commands + guardrails." }
+    {
+      "name": "jet-skills",
+      "source": ".",
+      "description": "Jet's company-agnostic Claude Code stack: architect/engineering skills, role workflows, behavioral guardrails, and a per-project context bootstrap."
+    }
   ]
 }

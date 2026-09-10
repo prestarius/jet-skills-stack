@@ -4,57 +4,63 @@ A resume doc for picking this project up cold. Update it as state changes.
 
 ## Goal
 Build and maintain **jet-skills**: a personal, company-agnostic Claude Code "stack" — skills +
-role-based slash commands + a behavioral `CLAUDE.md` + per-project `/bootstrap-context` — packaged as
-a plugin (`/plugin install jet-skills@jet-skills`) and installable via `./install.sh`.
-Repo: `github.com/prestarius/jet-skills-stack`, branch `master`.
+subagents + hook guardrails + a working agreement shipped as rules + per-project
+`/bootstrap-context` — packaged as a plugin (`/plugin install jet-skills@jet-skills`) and
+installable via `./install.sh`. Repo: `github.com/prestarius/jet-skills-stack`, branch `master`.
 
 ## Done
 - Scaffolded the repo; identity set to **Jet** (`prestarius@proton.me`, `prestarius.dev`).
-- Ported the real `humanizer` verbatim (24-pattern `references/ai-patterns.md`).
-- Genericized the `solution-architect` agent / `architect-review` persona.
-- Harvested + adapted patterns from four upstreams (see README credits): `document`/Diataxis,
-  `/scope-review`, the tiered guardrail (gstack); `search-first`, `skill-stocktake`,
-  `article-writing`, `market-research` (ECC); the `grill-*`/`tdd`/`diagnose`/`zoom-out`/`handoff`/
-  `caveman` skills (mattpocock); the four `CLAUDE.md` guardrails (karpathy).
-- Fleshed every stub skill out to full.
-- Broadened the guard hook → `hooks/scripts/command-guardrails.sh` (block / ask / allow tiers).
+- Ported the real `humanizer` verbatim (24-pattern `references/ai-patterns.md`; upstream
+  blader/humanizer now uses a different 25-pattern taxonomy, checked 2026-09-10 — no port needed).
+- Harvested + adapted patterns from four upstreams (see README credits).
+- 2026-09-10 audit (`BACKLOG.md`) and the first implementation pass — see "Current state".
 
-## Current state
-- **35 full skills (0 stubs), 8 commands, 2 agents, 1 guardrail hook.** README tables + credits in sync.
-- 2026-07-06 revision: sharpened the `handoff` / `to-cc-spec` trigger split (removed the shared
-  "hand this off" phrase); added mutual routing lines across the `eval-tool` / `tradeoff-table` /
-  `market-research` trio; heavy analysis skills now run forked (`context: fork` — `market-research`
-  → new `researcher` agent, `improve-codebase-architecture` → `solution-architect`,
-  `skill-stocktake` → default fork); added `researcher` agent and `design-doc`, `migration-plan`,
-  `estimate` skills. Considered and rejected `disable-model-invocation` for humanizer/caveman/
-  headless-loop/power-phrase — the field makes a skill slash-only, which would break their
-  natural-language triggers; the prose "only when explicitly asked" guard is the right mechanism.
-- 2026-06-12 revision: dropped `commands/adr.md` (shadowed — skills are slash-invocable and take
-  precedence over same-name commands); renamed `/security-review` → `/threat-model` (collided with
-  the bundled Claude Code skill); fixed `epic-numbering` frontmatter name to match its directory;
-  demoted `git reset --hard` to the ask tier and added `git stash drop/clear` + `find -delete`;
-  added `meeting-notes` + `postmortem` skills, `/status-report` command, a refresh mode in
-  `/bootstrap-context`, symlink pruning in `install.sh`, and `scripts/validate.sh`.
+## Current state (2026-09-10, verified against Claude Code 2.1.267)
+- **42 skills (33 model-invocable, 9 user-started), 2 agents, 3 hook scripts, 2 rules files,
+  6 eval cases.** No `commands/` directory any more (ADR 0002).
+- Working agreement ships as `rules/working-agreement.md` → `~/.claude/rules/` (installer) or a
+  `SessionStart` hook (plugin, `working_agreement` userConfig). Personal defaults in
+  `rules/personal-defaults.md`, `install.sh --personal`. Root `CLAUDE.md` imports the agreement
+  and holds repo-only notes.
+- Skills refer to compliance/locale defaults by role (`CONTEXT.md` `## Compliance`, working
+  agreement), never by value.
+- `install.sh --hooks` merges both guardrail hooks into `~/.claude/settings.json` (backup kept);
+  it also removes the old marker block from `~/.claude/CLAUDE.md` once (backup kept).
+- `scripts/validate.sh` now also checks frontmatter line 1, unknown keys, description length,
+  file guard + session-start hook smoke tests, `claude plugin validate --strict`, and the
+  always-on token budget (`JET_MAX_ALWAYS_ON_TOKENS`, default 6000). CI: `.github/workflows/validate.yml`.
+- Plugin 0.2.0; `metadata.verified_against` = 2.1.267.
 
 ## Open decisions
-- None blocking.
+- `solution-architect` persistent memory (BACKLOG 3.3.3): `memory: local` writes
+  `.claude/agent-memory-local/` into reviewed repos; not enabled.
+- `claude plugin details` reported ~5,037 always-on tokens after hiding 13 descriptions, barely
+  down from 5,063 — the estimator may ignore `disable-model-invocation`. Confirm with `/context`
+  or `/skill-doctor` in a live session before trusting the validator's budget check.
+- Eval cases are untested against a live run (`scripts/eval.sh` costs money); the `case.yaml`
+  shape follows the plugins reference but a first run may need field fixes.
 
 ## Next steps
-1. (Optional) Run the **`skill-stocktake`** skill over `skills/` to catch overlap/drift at 35 skills.
-2. New component → write/update → validate (below) → update README tables/credits → commit when asked → `git push origin master`.
+1. Run `./install.sh --personal --hooks` on this machine: it prunes the dangling `~/.claude/commands/*`
+   and `epic-numbering` symlinks, links the rules, and installs the hooks. Then `/context` to
+   confirm the rule loaded and the hidden skills are absent from the listing.
+2. Run `scripts/eval.sh 'handoff*'` once; fix the case format if the CLI rejects it.
+3. Remaining backlog: 3.3.3 (agent memory), 3.4 (spec `compatibility`/`metadata` fields, `npx skills`
+   check), 5.3 (changelog-watch routine), 3.1.3 (`/skill-doctor` review after two weeks).
+4. Commit when asked; `claude plugin tag --dry-run` before tagging 0.2.0.
 
 ## Gotchas (read before changing anything)
 - **Identity:** the author/persona is **Jet** only. The user's real legal name must NEVER appear in any
   shipped file.
-- **Company-agnostic:** no employer / client / internal-project names anywhere in `skills/ commands/
-  agents/ hooks/ CLAUDE.md`. All company/domain specifics live ONLY in a per-project `./CONTEXT.md`.
-- **Acceptance gate + per-change validation:** run `scripts/validate.sh` — it encodes the whole
-  checklist (skill frontmatter + name/dir match, bundled-file references, JSON parse, `bash -n`,
-  guard smoke tests, README links) and the **denylist** grep. The denylist stays out of this repo
-  on purpose: the script reads `~/.claude/jet-skills-denylist.txt` (override with
-  `JET_DENYLIST_FILE`) and skips with a note if absent — see the `~/.claude` project memory
-  `jet-skills-stack`. Must print `OK` / zero denylist matches before committing.
-- **Commit policy:** commit only when asked; end messages with the
-  `Co-Authored-By: Claude Opus 4.8 (1M context)` trailer. `.DS_Store` is gitignored.
-- **Philosophy:** minimalist, Claude-first, no MCP/infra in v1, flat `skills/`. When evaluating other
-  repos, harvest a few self-contained *patterns* in house style — don't adopt frameworks or language packs.
+- **Company- and person-agnostic:** no employer / client / internal-project names in `skills/
+  agents/ hooks/ rules/working-agreement.md`; no personal locale values in skill bodies.
+- **Acceptance gate:** `scripts/validate.sh` must print `OK` before committing. The denylist stays
+  out of this repo on purpose: the script reads `~/.claude/jet-skills-denylist.txt` (override with
+  `JET_DENYLIST_FILE`) and skips with a note if absent.
+- **Commit policy:** commit only when asked; use the attribution trailer the session provides.
+  `.DS_Store` and `evals/results/` are gitignored.
+- **User-started skills** (`disable-model-invocation: true`) cannot be triggered by natural
+  language; if one should be, drop the flag and pay its description cost.
+- **Plugin agents** ignore `hooks`, `mcpServers`, `permissionMode` — use `tools`/`disallowedTools`.
+- **Philosophy:** minimalist, Claude-first, no MCP/infra, flat `skills/`. Harvest self-contained
+  *patterns* from other repos in house style — don't adopt frameworks or language packs.

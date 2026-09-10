@@ -1,6 +1,7 @@
 ---
 name: caveman
-description: Switch to ultra-compressed communication that cuts tokens while keeping accuracy. Use whenever the user says "caveman mode", "be terse", "minimise tokens", or wants maximally compact responses without losing correctness.
+description: Switch to ultra-compressed communication that cuts tokens while keeping accuracy. Invoke as /caveman when you want maximally compact responses without losing correctness.
+disable-model-invocation: true
 ---
 
 Compressed comms mode. Cut tokens, keep correctness. Stay in mode until told to stop.

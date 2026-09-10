@@ -1,0 +1,18 @@
+name: eval-tool-vs-tradeoff
+description: A "which should I use" question with research needed must fire eval-tool, not tradeoff-table.
+difficulty: medium
+max_turns: 12
+timeout_seconds: 300
+prompt: |
+  Which message queue should we use for a small Python service on Kubernetes: RabbitMQ, NATS, or Redis Streams? Pick one for us.
+graders:
+  - type: tool_used
+    config:
+      tool_name: Skill
+  - type: llm
+    config:
+      instructions: Check whether the response is a single recommendation backed by current, cited web research.
+      rubric: |
+        - Names exactly one recommendation, a runner-up, and rejected options with reasons
+        - Cites at least two web sources with dates for version/maintenance/pricing claims
+        - Does not stop at a bare comparison table without a pick

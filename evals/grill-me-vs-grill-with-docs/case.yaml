@@ -1,0 +1,19 @@
+name: grill-me-vs-grill-with-docs
+description: Asking to pressure-test a plan without asking to record anything fires grill-me and asks exactly one question.
+difficulty: easy
+max_turns: 4
+timeout_seconds: 120
+prompt: |
+  Poke holes in this plan: we'll move session storage from Postgres to Redis next sprint to cut p99 latency, keeping Postgres as a fallback for a month.
+graders:
+  - type: tool_used
+    config:
+      tool_name: Skill
+  - type: llm
+    config:
+      instructions: Check the interrogation discipline.
+      rubric: |
+        - Restates the plan briefly
+        - Asks exactly ONE question, then stops and waits
+        - Recommends an answer to that question
+        - Does not write to CONTEXT.md or create an ADR

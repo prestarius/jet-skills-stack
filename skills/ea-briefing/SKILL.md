@@ -1,6 +1,8 @@
 ---
+name: ea-briefing
 description: Produce an Enterprise-Architecture briefing from a technical update or discussion, with governance questions; translate PL↔EN if the source and audience differ.
 argument-hint: "[the update/notes to brief on]"
+disable-model-invocation: true
 ---
 Turn `$ARGUMENTS` into a concise briefing for senior/Enterprise Architects:
 context, what's proposed, key decisions, risks, and 3–5 sharp governance questions worth

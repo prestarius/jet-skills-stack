@@ -1,6 +1,8 @@
 ---
+name: cost-forecast
 description: Forecast token/usage cost for an LLM workload from usage signals; produce a wiki-ready table.
 argument-hint: "[usage data or assumptions: users, requests, model mix]"
+disable-model-invocation: true
 ---
 Translate `$ARGUMENTS` into a cost forecast. **Web-search current model pricing first** —
 never use remembered prices. Build scenarios (e.g. cheaper-model-heavy vs premium-heavy),

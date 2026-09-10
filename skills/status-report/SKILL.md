@@ -1,6 +1,8 @@
 ---
+name: status-report
 description: Compose a stakeholder status update from recent work — git history plus the current conversation; PL or EN to match the audience.
 argument-hint: "[period + audience, e.g. 'last week, steering group, PL']"
+disable-model-invocation: true
 ---
 Read `./CONTEXT.md` if present. Build a status update for the period and audience in
 `$ARGUMENTS` (default period: since last Monday; default audience: technical peers).
@@ -14,4 +16,5 @@ Read `./CONTEXT.md` if present. Build a status update for the period and audienc
    executives; keep them for engineering audiences.
 
 Markdown only. State the covered period at the top. Don't invent progress: if something can't be
-verified from the sources above, leave it out or mark it `TODO: confirm`.
+verified from the sources above, leave it out or mark it `TODO: confirm`. For a changelog or
+release notes rather than a stakeholder update, use the `release-notes` skill.

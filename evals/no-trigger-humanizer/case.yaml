@@ -1,0 +1,15 @@
+name: no-trigger-humanizer
+description: Ordinary prose editing that never asks to de-AI text must NOT fire humanizer.
+difficulty: easy
+max_turns: 4
+timeout_seconds: 120
+prompt: |
+  Fix the typos in this sentence and nothing else: "Teh deploy pipline runs evry night at 2am and emails the on-call enginer."
+graders:
+  - type: llm
+    config:
+      instructions: Check that the model only fixed typos and did not invoke the humanizer skill or ask about tone.
+      rubric: |
+        - Output is the corrected sentence
+        - No question about desired tone, no rewrite beyond typos
+        - No mention of humanizing, AI patterns, or a Skill invocation named humanizer

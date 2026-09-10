@@ -6,7 +6,7 @@ description: Estimate effort for a feature, plan, or backlog with explicit assum
 Produce estimates a stakeholder can trust *because* the uncertainty is visible, not hidden.
 
 1. **Decompose first.** Break the work into independently estimable items (reuse the
-   `epic-numbering` structure if the input is a backlog; if items are too vague to size,
+   Epic / US / Task numbering from the working agreement if the input is a backlog; if items are too vague to size,
    say which and why). Read `./CONTEXT.md` for the team's units and velocity conventions.
 2. **Estimate per item, as a range.** Three-point (optimistic / likely / pessimistic) for
    anything consequential; T-shirt sizes only when the audience asked for rough order.

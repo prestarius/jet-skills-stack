@@ -8,6 +8,7 @@ description: |
   am I in", or is starting a non-trivial build with no spec or verification plan yet. For a
   single phase, defer to its native skill (to-cc-spec, grill-with-docs, verify, write-a-skill,
   loop/schedule) rather than this orchestrator.
+disable-model-invocation: true
 ---
 
 A 6-phrase system for building faster and with higher quality in Claude Code.
@@ -33,7 +34,10 @@ If the goal is already clear, skip the question and go to the relevant phase.
 
 **Fire when:** there are parallel, independent workstreams, or multiple perspectives are
 needed on one input. **Composes with:** the native Agent tool; for deep architecture work
-use the `solution-architect` agent.
+use the `solution-architect` agent. Pick the primitive by *who holds the plan*: you →
+worktrees (`--worktree`); Claude, turn by turn → subagents; a script → a dynamic workflow
+(`ultracode`); a lead agent → an agent team (experimental, 3–5 teammates, costly). For 5–30
+independent units that each become a PR, `/batch`.
 
 ```
 [TASK]
@@ -93,6 +97,9 @@ should become a hook.
 - **Layer 3 — human validation zones.** Identify high cost-of-error areas needing explicit
   sign-off (auth, payments, prod data are always candidates) vs. low-stakes areas that can
   move fast.
+- **Enforcement, not advice.** A CLAUDE.md line is a request. For a check that must hold, set a
+  `/goal` condition for the session ("all tests pass and no TODOs in src/") or wire the check
+  into a `Stop` hook — those run whatever Claude decides.
 
 ```
 I'm starting: [PROJECT]. Set up verification across three layers:
@@ -136,7 +143,8 @@ every broken automation adds operational debt. Run both filters before proceedin
 I want to automate: [PROCESS]. Before setting anything up:
 1. Confirm it passes the taste test (output fully quantifiable?).
 2. Confirm I'm okay with 80% quality — flag where quality loss would hurt.
-3. Suggest which Claude Code feature fits: hooks (event), schedule (time), loop (iterative).
+3. Suggest which Claude Code feature fits: hooks (event), schedule (time), loop (interval),
+   goal (until a condition holds), batch (fan-out across units).
 4. Identify validation zones that should stay manual. Proceed only after I confirm.
 ```
 
@@ -163,4 +171,4 @@ control over [WHAT]. Focus on reducing friction, not removing the human.
 | Interview me | `grill-with-docs` / `grill-me` | When details are unclear |
 | Verify before you build | `/verify` + `update-config` | Every project |
 | Build me a skill | `write-a-skill` | After a repeatable process |
-| Automate this ⚠️ | `loop` / `schedule` / hooks | Only after taste + 80/20 pass |
+| Automate this ⚠️ | `goal` / `loop` / `schedule` / `batch` / hooks | Only after taste + 80/20 pass |

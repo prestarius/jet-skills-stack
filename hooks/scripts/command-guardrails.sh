@@ -8,6 +8,10 @@
 #
 # Conservative by design: when in doubt it asks rather than blocks, and a benign
 # command slipping through is preferable to a false block.
+#
+# Self-test:
+#   echo '{"tool_input":{"command":"git push --force"}}' | bash hooks/scripts/command-guardrails.sh; echo "rc=$?"
+#   -> "BLOCKED …" on stderr, rc=2.  A safe command prints nothing, rc=0.
 set -euo pipefail
 input="$(cat)"
 
@@ -90,6 +94,23 @@ if "DROP TABLE" in U:
     ask("SQL DROP TABLE")
 if re.search(r'\bTRUNCATE\s+(?:TABLE\s+)?\w', U):
     ask("SQL TRUNCATE empties a table")
+
+# pushing the default branch itself: ask (a feature branch passes silently)
+m = re.search(r'\bgit\s+push\b([^\n;&|]*)', cmd)
+if m:
+    args = [t for t in m.group(1).split() if not t.startswith('-')]
+    named = [t.split(':')[-1] for t in args[1:]]          # refspecs after the remote
+    if any(b in ("main", "master") for b in named):
+        ask("pushing the default branch directly; confirm this is intended")
+    if not named:
+        import subprocess
+        try:
+            branch = subprocess.run(["git", "rev-parse", "--abbrev-ref", "HEAD"],
+                                    capture_output=True, text=True, timeout=3).stdout.strip()
+        except Exception:
+            branch = ""
+        if branch in ("main", "master"):
+            ask(f"pushing '{branch}' directly; confirm this is intended (or push a feature branch)")
 
 sys.exit(0)
 PY

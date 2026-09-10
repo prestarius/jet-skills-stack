@@ -11,7 +11,7 @@ Sections, in order:
 1. **Problem & context** — what hurts today and why now. Neutral; no solution yet.
 2. **Goals / non-goals** — what this design must achieve; what is explicitly out of scope.
 3. **Requirements & constraints** — functional and non-functional (scale, latency, budget,
-   **EU data residency / GDPR** where relevant), each marked hard or soft.
+   compliance per `CONTEXT.md`), each marked hard or soft.
 4. **Current state** — the relevant existing architecture, in the project's own terms.
 5. **Proposed design** — the recommended approach, concrete enough to challenge: components,
    boundaries, data flow, sync/async choices. Bias to the simplest design that meets the

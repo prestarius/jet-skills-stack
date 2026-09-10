@@ -1,0 +1,18 @@
+name: handoff-vs-spec
+description: "Summarise where we are so I can pick this up tomorrow" is a handoff, not an implementation spec.
+difficulty: easy
+max_turns: 6
+timeout_seconds: 180
+prompt: |
+  We've been refactoring the payment webhook handler; tests still fail on idempotency. I'm out of time — summarise where we are so I can pick this up in a fresh session tomorrow.
+graders:
+  - type: tool_used
+    config:
+      tool_name: Skill
+  - type: llm
+    config:
+      instructions: Check that the output is a session-continuity handoff document.
+      rubric: |
+        - Has Goal, Done, Current state, Open decisions, Next steps, Gotchas sections (or equivalents)
+        - Next steps are concrete (paths, commands), not a phased build plan
+        - Is not written as a SPEC file with architecture decisions and repo layout

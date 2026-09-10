@@ -1,0 +1,18 @@
+name: market-research-vs-eval-tool
+description: A landscape question ("who are the players") must fire market-research and must not pick a winner.
+difficulty: medium
+max_turns: 12
+timeout_seconds: 300
+prompt: |
+  What's the state of the open-source feature-flag market in 2026? Who are the players and how does the space segment?
+graders:
+  - type: tool_used
+    config:
+      tool_name: Skill
+  - type: llm
+    config:
+      instructions: Check whether the response is a cited survey, not a recommendation.
+      rubric: |
+        - Lists multiple players and how the space segments
+        - Every factual claim has a source and a date
+        - Does NOT recommend a single tool as the answer

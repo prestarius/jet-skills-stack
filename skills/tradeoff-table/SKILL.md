@@ -6,8 +6,9 @@ effort: high
 
 Output a Markdown table: columns = the candidate options, rows = decision criteria.
 Default criteria (drop/add to fit the case): implementation complexity, operational burden,
-scalability, cost (build + run), security posture, **EU data residency / GDPR fit**,
-vendor lock-in, maturity/community, time-to-ship. Score each cell concretely (e.g. Low/Med/High
+scalability, cost (build + run), security posture, **compliance fit** (data residency,
+self-hosting — per `CONTEXT.md` or the working agreement), vendor lock-in, maturity/community,
+time-to-ship. Score each cell concretely (e.g. Low/Med/High
 or 1–5), not vaguely.
 
 After the table:

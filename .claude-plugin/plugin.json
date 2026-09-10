@@ -1,9 +1,20 @@
 {
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
   "name": "jet-skills",
-  "version": "0.1.0",
-  "description": "Jet's company-agnostic Claude Code stack: architect/engineering skills, role-based slash commands, behavioral guardrails, and a per-project context bootstrap.",
+  "version": "0.2.0",
+  "description": "Jet's company-agnostic Claude Code stack: architect/engineering skills, role workflows, behavioral guardrails, and a per-project context bootstrap.",
   "author": { "name": "Jet", "email": "prestarius@proton.me" },
   "homepage": "https://prestarius.dev",
   "repository": "https://github.com/prestarius/jet-skills-stack",
-  "license": "MIT"
+  "license": "MIT",
+  "keywords": ["architecture", "skills", "guardrails", "adr", "tdd", "research"],
+  "metadata": { "verified_against": "2.1.267", "verified_date": "2026-09-10" },
+  "userConfig": {
+    "working_agreement": {
+      "type": "boolean",
+      "title": "Load the working agreement at session start",
+      "description": "Inject the jet-skills working agreement (think before coding, simplicity first, surgical changes, goal-driven execution) into every session via a SessionStart hook. Turn off if you install the rules file yourself.",
+      "default": true
+    }
+  }
 }

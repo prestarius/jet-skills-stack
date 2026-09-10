@@ -1,10 +1,12 @@
 ---
 name: slide-deck
-description: Plan and generate a training/working-session slide deck in Jet's house style (charcoal/teal), with presenter script and lab material. Use whenever the user wants slides, a deck, a training session, or a workshop. For .pptx output, defer file generation to the pptx skill but apply this skill's theme and structure.
+description: Plan and generate a training/working-session slide deck in Jet's house style (charcoal/teal) as a self-contained HTML deck, with presenter script and lab material. Use whenever the user wants slides, a deck, a training session, or a workshop. For .pptx output, defer file generation to a pptx-capable skill if one is installed but apply this skill's theme and structure.
 ---
 
-Default format: ask once whether the user wants **.pptx** (via the pptx skill, pptxgenjs-style)
-or a **self-contained HTML deck**. Apply the house theme either way (see `references/theme.md`).
+Default format: a **self-contained HTML deck**. Offer **.pptx** only if a pptx-capable skill is
+available (Anthropic's document skills, `pptx` in github.com/anthropics/skills — source-available,
+installable from that repo's marketplace); never hand-roll a .pptx generator. Apply the house
+theme either way (see `references/theme.md`).
 
 Deck structure for a training session:
 - Title + session number + one-line objective

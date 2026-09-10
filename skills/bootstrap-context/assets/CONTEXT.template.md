@@ -24,5 +24,10 @@ generated:
 - Tool:
 - Triage labels:
 
+## Compliance
+- Data residency / hosting constraints (e.g. EU-only, self-hosted):
+- Regulated or sensitive data handled:
+- Review lens to apply in evaluations and designs:
+
 ## TODO (human to confirm)
 -
