@@ -17,9 +17,10 @@ installable via `./install.sh`. Repo: `github.com/prestarius/jet-skills-stack`, 
 
 ## Current state (2026-09-10, verified against Claude Code 2.1.267)
 - **Released 0.2.0**: commit `fda05f1` on `master`, pushed; annotated tag `jet-skills--v0.2.0`
-  on origin (`claude plugin tag --push`). Follow-ups `530454a` (handoff) and `8269c76` (eval
-  cases rewritten). Working tree clean.
-- **Installed on this machine** via `./install.sh --personal --hooks`: 42 skill symlinks, both
+  on origin (`claude plugin tag --push`). Follow-ups `530454a` (handoff), `8269c76` (eval
+  cases rewritten), `00861bd` (handoff), `2e569e8` (remaining backlog closed). Working tree clean.
+- **Installed on this machine** via `./install.sh --personal --hooks` (re-run after `2e569e8` to link
+  `changelog-watch`): 43 skill symlinks, both
   rules linked, old marker block removed from `~/.claude/CLAUDE.md` (now empty; backup
   `CLAUDE.md.bak`), both guard hooks in `~/.claude/settings.json` (backup `settings.json.bak`).
 - **43 skills (33 model-invocable, 10 user-started), 2 agents, 3 hook scripts, 2 rules files,
