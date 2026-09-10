@@ -17,7 +17,8 @@ installable via `./install.sh`. Repo: `github.com/prestarius/jet-skills-stack`, 
 
 ## Current state (2026-09-10, verified against Claude Code 2.1.267)
 - **Released 0.2.0**: commit `fda05f1` on `master`, pushed; annotated tag `jet-skills--v0.2.0`
-  on origin (`claude plugin tag --push`). Working tree clean.
+  on origin (`claude plugin tag --push`). Follow-ups `530454a` (handoff) and `8269c76` (eval
+  cases rewritten). Working tree clean.
 - **Installed on this machine** via `./install.sh --personal --hooks`: 42 skill symlinks, both
   rules linked, old marker block removed from `~/.claude/CLAUDE.md` (now empty; backup
   `CLAUDE.md.bak`), both guard hooks in `~/.claude/settings.json` (backup `settings.json.bak`).
@@ -42,15 +43,22 @@ installable via `./install.sh`. Repo: `github.com/prestarius/jet-skills-stack`, 
 - `claude plugin details` reported ~5,037 always-on tokens after hiding 13 descriptions, barely
   down from 5,063 — the estimator may ignore `disable-model-invocation`. Confirm with `/context`
   or `/skill-doctor` in a live session before trusting the validator's budget check.
-- Eval cases are untested against a live run (`scripts/eval.sh` costs money); the `case.yaml`
-  shape follows the plugins reference but a first run may need field fixes.
+- **`claude plugin eval` is early access and not enabled on this account** (2.1.267 prints
+  "`plugin eval` is currently in early access" for every subcommand, even `init`). First-party
+  accounts get it automatically after `claude update` + a fresh session; nothing to configure
+  locally. The six cases now use the layout the CLI reads (`prompt.md` + `graders/*.md`;
+  `tool_used` with `tool: Skill` + `input_match`, `llm` rubric in the body, `file_exists`,
+  `regex`). Unverified until a run succeeds: whether `plugins: ["../.."]` in `prompt.md` is
+  redundant when the plugin dir is passed on the command line.
 
 ## Next steps
 1. In a fresh session: `/context` should list `jet-working-agreement.md` and
    `jet-personal-defaults.md` under Memory files; `/hooks` should show the two PreToolUse
    entries; the 9 user-started skills should be absent from Claude's skill listing. Check the
    GitHub Actions run for commit `fda05f1` (first run of `.github/workflows/validate.yml`).
-2. Run `scripts/eval.sh 'handoff*'` once; fix the `case.yaml` shape if the CLI rejects it.
+2. After `claude update`, in a fresh session try `scripts/eval.sh 'handoff*'`; if it still prints
+   the early-access line the flag has not reached the account. On the first real run fix any
+   frontmatter the CLI rejects (see Open decisions).
 3. Remaining backlog: 3.3.3 (agent memory), 3.4 (spec `compatibility`/`metadata` fields, `npx skills`
    check), 5.3 (changelog-watch routine), 3.1.3 (`/skill-doctor` review after two weeks).
 4. Delete `~/.claude/CLAUDE.md.bak` and `~/.claude/settings.json.bak` once the new session checks out.
