@@ -9,7 +9,7 @@ Plan the route from current to target in phases that each leave the system worki
 `./CONTEXT.md` first; describe both states in the project's own domain language.
 
 1. **Pin down both ends.** Current state (what actually runs, including the ugly parts) and
-   target state. If the target itself is undecided, stop — route to `design-doc` or `grill-me`
+   target state. If the target itself is undecided, stop — route to `design-doc` or `grilling`
    first; a migration plan toward a vague target is fiction.
 2. **Bias to incremental.** Default to strangler-fig-style coexistence: new and old running
    side by side, traffic/data moving over in slices. A big-bang cutover needs explicit
@@ -23,8 +23,8 @@ Plan the route from current to target in phases that each leave the system worki
    drift, contract/consumer breakage, freeze windows, the long tail of stragglers on the old path,
    and the danger of the coexistence layer becoming permanent — give each phase an owner condition
    for removing scaffolding.
-5. **Route onward.** Capture the chosen strategy as an ADR (`adr` skill), break phases into
-   tracker issues (`to-issues`), and size them with the `estimate` skill if asked.
+5. **Route onward.** Capture the chosen strategy as an ADR (`domain-modeling` skill), break phases into
+   tracker issues (`to-tickets`), and size them with the `estimate` skill if asked.
 
 Prefer the smallest first phase that proves the mechanism end-to-end over a "foundations" phase
 that delivers nothing observable.

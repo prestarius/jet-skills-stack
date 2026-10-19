@@ -9,7 +9,7 @@ Write something worth reading: a clear argument in the author's voice, not gener
    and **voice**. If the user gave a writing sample or `./CONTEXT.md` defines a tone, match it; otherwise
    ask once. Respond in the language the user is writing in (PL or EN).
 2. **Get the facts straight.** If the piece makes claims that could be wrong or dated, research them
-   first (use the `search-first` / `market-research` skills) and verify on the web. Don't invent
+   first (use the `market-research` skill) and verify on the web. Don't invent
    sources, quotes, or statistics.
 3. **Outline, then confirm.** Propose a structure — a strong lede (a hook or a sharp claim, not a
    warm-up paragraph), the body beats, and a real takeaway. Get a nod before drafting a long piece.

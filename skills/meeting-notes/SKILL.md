@@ -19,5 +19,5 @@ Rules:
 - Quote ambiguous statements verbatim instead of interpreting them.
 
 Then offer routing (each opt-in, never automatic): the obsidian-note skill to file it in the
-vault, the adr skill for any durable architecture decision, the to-issues skill for the action
+vault, the domain-modeling skill for any durable architecture decision, the to-tickets skill for the action
 items.

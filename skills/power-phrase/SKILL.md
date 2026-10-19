@@ -6,7 +6,7 @@ description: |
   this stack's own skill. Use only for the whole-session framing: when the user says "power
   phrases", "run the power-phrase framework", "set up this session properly", "which phase
   am I in", or is starting a non-trivial build with no spec or verification plan yet. For a
-  single phase, defer to its native skill (to-cc-spec, grill-with-docs, verify, write-a-skill,
+  single phase, defer to its native skill (to-spec, grill-with-docs, verify, write-a-skill,
   loop/schedule) rather than this orchestrator.
 disable-model-invocation: true
 compatibility: "Claude Code (uses disable-model-invocation); name + description work in any Agent Skills tool"
@@ -55,7 +55,7 @@ Each works independently without seeing the others' output.
 ## Phrase 2 — Write me a spec
 
 **Fire when:** the user is about to build without a plan. **Composes with:** the
-`to-cc-spec` skill / `/spec` command — invoke that to produce the spec; this phase just
+`to-spec` skill / `/spec` command — invoke that to produce the spec; this phase just
 frames the ask. If the user can't yet evaluate a spec, run **Interview** (Phrase 3) first.
 
 ```
@@ -70,8 +70,8 @@ and your assumptions. Do not start building yet.
 ## Phrase 3 — Interview me
 
 **Fire when:** the user has a goal but is unclear on the specifics. **Composes with:**
-`grill-with-docs` (records answers into CONTEXT.md + ADRs as you go) or `grill-me`
-(pressure-test an existing plan). Prefer those skills' one-question-at-a-time discipline.
+`grill-with-docs` (records answers into CONTEXT.md + ADRs as you go) or `grilling`
+(pressure-test an existing plan). Follow those skills' interview discipline.
 
 ```
 Interview me to build [WHAT]. One question at a time:
@@ -155,9 +155,9 @@ control over [WHAT]. Focus on reducing friction, not removing the human.
 ## Full-session sequence
 
 ```
-1. Interview        → grill-with-docs / grill-me   (extract what you know)
+1. Interview        → grill-with-docs / grilling   (extract what you know)
 2. Verify           → strategy + /verify           (CLAUDE.md, tools, validation zones)
-3. Spec             → to-cc-spec / /spec            (finalize the plan)
+3. Spec             → to-spec / /spec            (finalize the plan)
 4. Sub agents       → Agent tool                    (execute in parallel)
 5. Build a skill    → write-a-skill                 (capture for next time)
 6. Automate         → loop / schedule / hooks       (only if both filters pass)
@@ -168,8 +168,8 @@ control over [WHAT]. Focus on reducing friction, not removing the human.
 | Phrase | Routes to | Best for |
 |---|---|---|
 | Launch [N] sub agents | Agent / `solution-architect` | Parallel work, multiple perspectives |
-| Write me a spec | `to-cc-spec` / `/spec` | Before any build |
-| Interview me | `grill-with-docs` / `grill-me` | When details are unclear |
+| Write me a spec | `to-spec` / `/spec` | Before any build |
+| Interview me | `grill-with-docs` / `grilling` | When details are unclear |
 | Verify before you build | `/verify` + `update-config` | Every project |
 | Build me a skill | `write-a-skill` | After a repeatable process |
 | Automate this ⚠️ | `goal` / `loop` / `schedule` / `batch` / hooks | Only after taste + 80/20 pass |

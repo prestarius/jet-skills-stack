@@ -1,8 +1,8 @@
 ---
 name: postmortem
-description: Write a blameless incident postmortem — impact, timeline, contributing factors, what went well/poorly, concrete follow-up actions. Use whenever the user says "postmortem", "incident review", "RCA", "write up this outage", or when a diagnose session ends on an incident that deserves a durable record.
+description: Write a blameless incident postmortem — impact, timeline, contributing factors, what went well/poorly, concrete follow-up actions. Use whenever the user says "postmortem", "incident review", "RCA", "write up this outage", or when a diagnosing-bugs session ends on an incident that deserves a durable record.
 ---
-Read `./CONTEXT.md` if present. Gather facts from the conversation (especially any diagnose
+Read `./CONTEXT.md` if present. Gather facts from the conversation (especially any diagnosing-bugs
 output), logs, and whatever the user provides. One incident per document.
 
 Structure:
@@ -13,7 +13,7 @@ Structure:
    trigger, why defenses didn't catch it, and what made recovery slow.
 4. **What went well / what went poorly** — honest, short.
 5. **Follow-up actions** — concrete and verifiable, each preventing a contributing factor or
-   shortening detection/recovery. Written so the to-issues skill can turn them into tickets.
+   shortening detection/recovery. Written so the to-tickets skill can turn them into tickets.
 
 Rules:
 - Blameless: name systems, gaps, and missing guardrails — never people. "The deploy pipeline
@@ -21,5 +21,5 @@ Rules:
 - Facts only; mark every unknown `TODO:` instead of reconstructing a plausible story.
 - If the fix isn't verified yet, say so in the summary.
 
-Offer (opt-in): file via the obsidian-note skill; capture a durable decision via the adr skill;
-turn follow-ups into tickets via the to-issues skill.
+Offer (opt-in): file via the obsidian-note skill; capture a durable decision via the domain-modeling skill;
+turn follow-ups into tickets via the to-tickets skill.

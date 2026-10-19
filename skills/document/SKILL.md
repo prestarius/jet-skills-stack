@@ -17,7 +17,7 @@ undifferentiated wall of prose.
    - **Reference** — complete, accurate, factual description of the surface (API, flags, config).
      Information-oriented. Tie every entry to the code.
    - **Explanation** — *why* it works this way: design decisions, trade-offs, alternatives rejected.
-     Understanding-oriented. (If a decision is load-bearing, suggest capturing it via the `adr` skill.)
+     Understanding-oriented. (If a decision is load-bearing, suggest capturing it via the `domain-modeling` skill.)
    - **How-to** — task-oriented recipes that assume basic familiarity ("how to add a new handler").
    - **Tutorial** — a learning-oriented walkthrough for a newcomer, with a working example that
      produces a visible result early. Every step must actually run.

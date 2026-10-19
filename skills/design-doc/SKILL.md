@@ -1,6 +1,6 @@
 ---
 name: design-doc
-description: Author a design document (RFC) for a feature or system before the decision is locked — problem, requirements, options, proposed design, risks. Use whenever the user says "write a design doc", "draft an RFC", "write up the design", "proposal for the team", or has finished discussing an approach and needs the document that carries it to reviewers. Upstream of adr (the decision) and to-cc-spec (the implementation spec).
+description: Author a design document (RFC) for a feature or system before the decision is locked — problem, requirements, options, proposed design, risks. Use whenever the user says "write a design doc", "draft an RFC", "write up the design", "proposal for the team", or has finished discussing an approach and needs the document that carries it to reviewers. Upstream of domain-modeling (the ADR) and to-spec (the implementation spec).
 effort: high
 compatibility: "Claude Code (uses effort); name + description work in any Agent Skills tool"
 ---
@@ -24,5 +24,5 @@ Sections, in order:
 Style: decisive, terse, no hedging; diagrams (Mermaid) where they remove ambiguity. If something
 load-bearing is genuinely unknown, ask one sharp question before writing rather than inventing it.
 
-Downstream: once the design is accepted, capture the decision with the `adr` skill; to hand the
-build to an agent, use `to-cc-spec`; to hand it to a team, use `to-issues`.
+Downstream: once the design is accepted, capture the decision with the `domain-modeling` skill; to hand the
+build to an agent, use `to-spec`; to hand it to a team, use `to-tickets`.
