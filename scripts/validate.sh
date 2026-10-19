@@ -92,7 +92,7 @@ done < <(grep -oE '\]\([^)]+\)' README.md | sed -E 's/^\]\(//; s/\)$//' | grep -
 DENYLIST="${JET_DENYLIST_FILE:-$HOME/.claude/jet-skills-denylist.txt}"
 if [ -f "$DENYLIST" ]; then
   pat="$(grep -v '^\s*$\|^#' "$DENYLIST" | paste -sd'|' -)"
-  if [ -n "$pat" ] && grep -riE "$pat" skills agents hooks rules CLAUDE.md README.md docs 2>/dev/null; then
+  if [ -n "$pat" ] && grep -riE "$pat" skills agents hooks rules .claude/CLAUDE.md README.md docs 2>/dev/null; then
     err "denylist match found above — scrub before committing"
   fi
 else
