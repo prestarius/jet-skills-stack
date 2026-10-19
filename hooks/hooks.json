@@ -5,13 +5,13 @@
       {
         "matcher": "Bash",
         "hooks": [
-          { "type": "command", "command": "bash ${CLAUDE_PLUGIN_ROOT}/hooks/scripts/command-guardrails.sh", "timeout": 10 }
+          { "type": "command", "command": "bash \"${CLAUDE_PLUGIN_ROOT}/hooks/scripts/command-guardrails.sh\"", "timeout": 10 }
         ]
       },
       {
         "matcher": "Read|Write|Edit",
         "hooks": [
-          { "type": "command", "command": "bash ${CLAUDE_PLUGIN_ROOT}/hooks/scripts/file-guardrails.sh", "timeout": 10 }
+          { "type": "command", "command": "bash \"${CLAUDE_PLUGIN_ROOT}/hooks/scripts/file-guardrails.sh\"", "timeout": 10 }
         ]
       }
     ],
@@ -19,7 +19,7 @@
       {
         "matcher": "startup|resume",
         "hooks": [
-          { "type": "command", "command": "bash ${CLAUDE_PLUGIN_ROOT}/hooks/scripts/working-agreement.sh", "timeout": 10 }
+          { "type": "command", "command": "bash \"${CLAUDE_PLUGIN_ROOT}/hooks/scripts/working-agreement.sh\"", "timeout": 10 }
         ]
       }
     ]
