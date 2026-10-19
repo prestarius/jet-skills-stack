@@ -12,7 +12,7 @@ after `claude update` and a fresh session. Until then the runner prints only
 
 ```bash
 scripts/eval.sh                  # all cases, with a no-plugin baseline arm
-scripts/eval.sh 'handoff*'       # one case
+scripts/eval.sh 'eval-tool*'       # one case
 ```
 
 Results land in `evals/results/` (gitignored). Add a case whenever a skill's description

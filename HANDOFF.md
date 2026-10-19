@@ -62,7 +62,7 @@ installable via `./install.sh`. Repo: `github.com/prestarius/jet-skills-stack`, 
    `jet-personal-defaults.md` under Memory files; `/hooks` should show the two PreToolUse
    entries; the 9 user-started skills should be absent from Claude's skill listing. Check the
    GitHub Actions run for commit `fda05f1` (first run of `.github/workflows/validate.yml`).
-2. After `claude update`, in a fresh session try `scripts/eval.sh 'handoff*'`; if it still prints
+2. After `claude update`, in a fresh session try `scripts/eval.sh 'eval-tool*'`; if it still prints
    the early-access line the flag has not reached the account. On the first real run fix any
    frontmatter the CLI rejects (see Open decisions).
 3. Remaining backlog: 3.1.3 (`/skill-doctor` review, due 2026-09-24) and 5.1.2 (skill-creator

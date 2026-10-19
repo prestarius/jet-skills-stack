@@ -39,8 +39,8 @@ of the cross-tool Agent Skills spec; `effort`, `context`, `agent`, `paths`,
 
 ## Company-agnostic and person-agnostic
 No employer, client, or internal-project names anywhere in `skills/`, `agents/`, `hooks/`, or
-`rules/working-agreement.md`. Project specifics go in the per-repo `CONTEXT.md` (written by
-`/bootstrap-context`); personal locale and output defaults go in `rules/personal-defaults.md`.
+`rules/working-agreement.md`. Project specifics go in the working repo (`CONTEXT.md` glossary,
+`CLAUDE.md`/`AGENTS.md`); personal locale and output defaults go in `rules/personal-defaults.md`.
 Skills refer to both by role ("the compliance lens from CONTEXT.md", "the product-link defaults
 from the working agreement"), never by value.
 

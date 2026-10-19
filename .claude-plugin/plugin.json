@@ -7,7 +7,7 @@
   "homepage": "https://prestarius.dev",
   "repository": "https://github.com/prestarius/jet-skills-stack",
   "license": "MIT",
-  "keywords": ["architecture", "skills", "guardrails", "adr", "tdd", "research"],
+  "keywords": ["architecture", "skills", "guardrails", "research"],
   "metadata": { "verified_against": "2.1.267", "verified_date": "2026-09-10" },
   "userConfig": {
     "working_agreement": {
