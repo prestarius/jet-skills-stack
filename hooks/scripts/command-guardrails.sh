@@ -95,9 +95,10 @@ if "DROP TABLE" in U:
 if re.search(r'\bTRUNCATE\s+(?:TABLE\s+)?\w', U):
     ask("SQL TRUNCATE empties a table")
 
-# pushing the default branch itself: ask (a feature branch passes silently)
+# pushing the default branch itself: ask (a feature branch passes silently).
+# Opt out with GUARD_ALLOW_DEFAULT_BRANCH_PUSH=1 (solo repos); force push stays blocked above.
 m = re.search(r'\bgit\s+push\b([^\n;&|]*)', cmd)
-if m:
+if m and os.environ.get("GUARD_ALLOW_DEFAULT_BRANCH_PUSH") != "1":
     args = [t for t in m.group(1).split() if not t.startswith('-')]
     named = [t.split(':')[-1] for t in args[1:]]          # refspecs after the remote
     if any(b in ("main", "master") for b in named):
