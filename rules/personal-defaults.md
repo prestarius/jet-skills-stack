@@ -13,6 +13,12 @@ not part of the plugin. Fork this file if you use the stack.
 - Default package registries: PyPI for Python, NuGet for .NET, npm for JavaScript.
 - Compliance lens: call out EU data residency / GDPR and self-hosting posture in tool evaluations, tradeoff tables, design docs, and architecture reviews when `CONTEXT.md` does not say otherwise.
 
+## Git
+- After each finished change, commit and push to the current branch without asking, in every repo.
+  Pushing `main`/`master` directly is fine for my own repos.
+- Still ask before destructive git commands (`reset --hard`, `clean -fd`, `branch -D`, `stash drop/clear`,
+  discarding uncommitted work). Never force-push.
+
 ## Obsidian
 - Frontmatter schema for notes: `created`, `tags`, `category`, `status`. Use fixed section headings.
 - Add Obsidian elements (templates, scripts, plugins) **one at a time**. Never propose a ready-made starter vault.
