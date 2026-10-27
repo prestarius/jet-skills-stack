@@ -38,7 +38,7 @@ The plugin `name` namespaces components, e.g. `/jet-skills:architect-review`.
 **Skills only, any Agent-Skills tool** (Cursor, Codex, Copilot, Gemini CLI, …):
 
 ```bash
-npx skills add prestarius/jet-skills-stack --list   # see the 26 skills
+npx skills add prestarius/jet-skills-stack --list   # see the 24 skills
 npx skills add prestarius/jet-skills-stack -s design-doc -s zoom-out -s eval-tool
 ```
 
@@ -71,12 +71,10 @@ Claude may start these on its own when the description matches.
 | [`postmortem`](skills/postmortem/SKILL.md) | Blameless incident postmortem with follow-ups ready for to-tickets. |
 | [`read`](skills/read/SKILL.md) | Before sending a body to an unread contract, shortening someone's text, or naming the newest model: find and quote the contract, cut by rule, check a live source. From MEGA.dev S01E01. |
 | [`release-notes`](skills/release-notes/SKILL.md) | Git history since a tag → changelog entry / release notes in the house format. |
-| [`scaffold-exercises`](skills/scaffold-exercises/SKILL.md) | Incremental workshop exercises with starter code and solutions. |
 | [`skill-stocktake`](skills/skill-stocktake/SKILL.md) | Audit skills for overlap, staleness, context cost, and third-party safety; verdicts keep/improve/update/hide/retire/merge (forked). |
 | [`slide-deck`](skills/slide-deck/SKILL.md) | Training deck (HTML) with presenter script and lab. |
 | [`threat-model`](skills/threat-model/SKILL.md) | OWASP Top 10 + STRIDE pass over a design or code path. |
 | [`tradeoff-table`](skills/tradeoff-table/SKILL.md) | Side-by-side option comparison with a clear recommendation. |
-| [`write-a-skill`](skills/write-a-skill/SKILL.md) | New skills with correct frontmatter, progressive disclosure, and eval cases. |
 | [`zoom-out`](skills/zoom-out/SKILL.md) | Explain unfamiliar code in whole-system context. |
 
 ### User-started skills
@@ -91,7 +89,6 @@ their descriptions cost no context.
 | [`/cost-forecast`](skills/cost-forecast/SKILL.md) | Forecast LLM workload cost (web-researched pricing). |
 | [`/ea-briefing`](skills/ea-briefing/SKILL.md) | Enterprise-Architecture briefing with governance questions (PL↔EN). |
 | [`/headless-loop`](skills/headless-loop/SKILL.md) | Ready-to-run headless loops (shell batch, feedback gate, Agent SDK) — after checking `/goal`, `/batch`, `/loop`, `/schedule` don't already cover it. |
-| [`/power-phrase`](skills/power-phrase/SKILL.md) | Orchestrate a build session with the 6 Power Phrases framework. |
 | [`/status-report`](skills/status-report/SKILL.md) | Stakeholder status update from git history + conversation (PL/EN). |
 
 Skills are directly invocable as `/<skill-name>`; there are no wrapper commands.

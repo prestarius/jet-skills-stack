@@ -27,7 +27,7 @@ and stop if so:
 | Same change across 5–30 independent units, each as a PR | `/batch` — one background subagent per unit, each in its own worktree |
 | Re-run a prompt on an interval in this session | `/loop [interval] <prompt or /skill>` |
 | Run on a schedule in the cloud, unattended | `/schedule` (routines) |
-| The "keep re-prompting until done" pattern | official `ralph-wiggum` plugin, or `/goal` |
+| The "keep re-prompting until done" pattern | official `ralph-loop` plugin, or `/goal` |
 
 A script is right when the loop must run **outside a session** (CI, cron, a pipeline) or **embedded
 in an application**. Then determine which of the three patterns fits. If the user hasn't made it
