@@ -69,6 +69,7 @@ Claude may start these on its own when the description matches.
 | [`migration-plan`](skills/migration-plan/SKILL.md) | Phase a modernization: coexistence mechanism, exit criteria, rollback per phase. |
 | [`obsidian-note`](skills/obsidian-note/SKILL.md) | Complete Obsidian note in the house schema. |
 | [`postmortem`](skills/postmortem/SKILL.md) | Blameless incident postmortem with follow-ups ready for to-tickets. |
+| [`read`](skills/read/SKILL.md) | Before sending a body to an unread contract, shortening someone's text, or naming the newest model: find and quote the contract, cut by rule, check a live source. From MEGA.dev S01E01. |
 | [`release-notes`](skills/release-notes/SKILL.md) | Git history since a tag → changelog entry / release notes in the house format. |
 | [`scaffold-exercises`](skills/scaffold-exercises/SKILL.md) | Incremental workshop exercises with starter code and solutions. |
 | [`skill-stocktake`](skills/skill-stocktake/SKILL.md) | Audit skills for overlap, staleness, context cost, and third-party safety; verdicts keep/improve/update/hide/retire/merge (forked). |
