@@ -15,7 +15,7 @@ skill). For larger sets, evaluate in batches and report progress.
    the installed set). For each, extract `name`, `description`, invocation mode
    (`disable-model-invocation` / `user-invocable`), full-vs-stub status, body size, and any
    referenced bundled files (`references/`, `assets/`, `scripts/`).
-2. **Get the cost and usage numbers.** Ask the user to paste `/skill-doctor` output (context cost
+2. **Get the cost and usage numbers.** Ask the user to paste `/skill-doctor` and `/doctor prompt-audit` output (context cost
    per skill, which never fired) and run `claude --plugin-dir <repo> plugin details <plugin>` for
    always-on vs on-invoke tokens. A skill that costs context every session and never fires is the
    first candidate to hide or retire.

@@ -42,11 +42,15 @@ If the request already implies a pattern, skip the question and proceed.
 
 ## Guardrails that go in every script
 
-- **Isolation**: `--bare` (no hooks, skills, MCP, CLAUDE.md, auto memory from the runner) for CI
-  and cron; needs `ANTHROPIC_API_KEY`. For the SDK, `setting_sources=[]`.
+- **Isolation**: `--bare` for CI and cron: no hooks, skills, CLAUDE.md, auto memory, system
+  reminders or background tasks; only MCP servers named on the command line connect, and a shell
+  command stops at its timeout (2.1.286). Needs `ANTHROPIC_API_KEY`. For the SDK, `setting_sources=[]`.
+  Fork subagents are on by default in `-p` and the SDK (2.1.302); set `CLAUDE_CODE_FORK_SUBAGENT=0`
+  when a loop must stay lean.
 - **Permissions**: the narrowest `--allowedTools` that lets the job succeed
   (`Bash(pytest:*)`, not `Bash`) plus `--permission-mode dontAsk` (deny-by-default) or
-  `--permission-prompts none` on unattended hosts. Never `--dangerously-skip-permissions` outside
+  `--permission-prompts none` on unattended hosts. Always pass the mode: without it, `-p` starts
+  in `default` mode on third-party providers or with telemetry off (2.1.302). Never `--dangerously-skip-permissions` outside
   a sandbox the user explicitly owns.
 - **Ceilings**: `timeout`, `--max-turns`, `--max-budget-usd`, and a capped attempt count. An
   uncapped loop is a billing incident.

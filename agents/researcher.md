@@ -4,6 +4,7 @@ description: Web-research subagent for fan-out fact gathering with mandatory cit
 tools: WebSearch, WebFetch, Read, Grep, Glob
 model: sonnet
 maxTurns: 40
+omitClaudeMd: true
 color: cyan
 ---
 You are a meticulous research analyst. Your job is breadth-first web research that comes back

@@ -49,7 +49,7 @@ installable via `./install.sh`. Repo: `github.com/prestarius/jet-skills-stack`, 
 - `claude plugin details` reported ~5,037 always-on tokens after hiding 13 descriptions, barely
   down from 5,063 — the estimator may ignore `disable-model-invocation`. Confirm with `/context`
   or `/skill-doctor` in a live session before trusting the validator's budget check.
-- **`claude plugin eval` is early access and not enabled on this account** (2.1.267 prints
+- **`claude plugin eval` works on this account since 2.1.311** (2026-10-27; `scripts/eval.sh` runs it, not yet run). Before, 2.1.267 printed
   "`plugin eval` is currently in early access" for every subcommand, even `init`). First-party
   accounts get it automatically after `claude update` + a fresh session; nothing to configure
   locally. The six cases now use the layout the CLI reads (`prompt.md` + `graders/*.md`;

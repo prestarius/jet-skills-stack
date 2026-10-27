@@ -70,8 +70,12 @@ for event, entries in wanted.items():
     present = {h.get("command") for e in lst for h in e.get("hooks", [])}
     for matcher, cmd in entries:
         if cmd in present:
+            for e in lst:
+                for h in e.get("hooks", []):
+                    if h.get("command") == cmd and h.get("onFailure") != "block":
+                        h["onFailure"] = "block"; added += 1
             continue
-        lst.append({"matcher": matcher, "hooks": [{"type": "command", "command": cmd, "timeout": 10}]})
+        lst.append({"matcher": matcher, "hooks": [{"type": "command", "command": cmd, "timeout": 10, "onFailure": "block"}]})
         added += 1
 json.dump(s, open(path, "w"), indent=2); open(path, "a").write("\n")
 print(f"hooks: {added} added to {path} (backup: {path}.bak)")
