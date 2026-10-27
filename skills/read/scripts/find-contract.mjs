@@ -12,14 +12,17 @@
 // It also says when the response is itself a contract (JSON Schema, OpenAPI, AsyncAPI).
 // --base <url>  resolves relative links in a saved page.
 // --open        prints each listed contract as the server sends it. A contract on a local or private
-//               address is skipped unless the page itself is on that host.
+//               address is skipped unless the page itself is on that host. Local means a local name, or
+//               a name that resolves to a private address at the time of the check.
 // Exit code: 0 = something is declared, 2 = nothing is declared, 1 = an error.
 //
 // Network: one GET to the URL, and with --open one GET per listed contract. No body, no cookies, no keys.
+// Bodies are cut at 2 MB. Text taken from a page is printed with control characters removed.
 // Files: reads only files inside the current working folder. Writes nothing.
 // Plain Node.js 18 or newer, no dependencies.
 
 import assert from 'node:assert/strict';
+import { lookup } from 'node:dns/promises';
 import { readFile, realpath } from 'node:fs/promises';
 import { isAbsolute, relative, resolve, sep } from 'node:path';
 
@@ -34,9 +37,13 @@ const FIELD_TAGS = new Set(['input', 'select', 'textarea', 'button']);
 const LIMITS = ['maxlength', 'minlength', 'pattern', 'min', 'max', 'step', 'accept'];
 const SIGN_IN_PATH = /(^|[\/_-])(log-?in|sign-?in|auth|sso)([\/_.?-]|$)/i;
 const TIMEOUT_MS = 15000;
+const MAX_BODY = 2 * 1024 * 1024;
 const TAG = /<(\/?)([a-zA-Z][\w:-]*)((?:\s+[^\s"'>\/=]+(?:\s*=\s*(?:"[^"]*"|'[^']*'|[^\s"'=<>`]+))?)*)\s*\/?>/g;
 const ATTR = /([^\s"'>\/=]+)(?:\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s"'=<>`]+)))?/g;
 const ENTITIES = { amp: '&', lt: '<', gt: '>', quot: '"', apos: "'", nbsp: ' ' };
+
+// A page can put a line break in an attribute (&#10;) and forge a line of this report. Keep it on one line.
+const clean = (s) => s.replace(/[\u0000-\u001f\u007f]+/g, ' ');
 
 function decode(s) {
   return s.replace(/&(#x[0-9a-f]+|#[0-9]+|[a-z]+);/gi, (m, e) => {
@@ -50,7 +57,7 @@ function attrs(src) {
   const out = Object.create(null);
   for (const m of src.matchAll(ATTR)) {
     const name = m[1].toLowerCase();
-    if (!(name in out)) out[name] = decode(m[2] ?? m[3] ?? m[4] ?? '');
+    if (!(name in out)) out[name] = clean(decode(m[2] ?? m[3] ?? m[4] ?? ''));
   }
   return out;
 }
@@ -73,8 +80,19 @@ function pathOf(url) {
 
 // Hosts on your own machine or network. --open prints a contract there only when the page itself is on
 // that host, so a page cannot point this script at your network and have it print what it finds.
-const LOCAL_HOST =
-  /^(localhost|.+\.localhost|.+\.local|.+\.internal|0\.0\.0\.0|127\.\d+\.\d+\.\d+|10\.\d+\.\d+\.\d+|192\.168\.\d+\.\d+|172\.(1[6-9]|2\d|3[01])\.\d+\.\d+|169\.254\.\d+\.\d+|\[::1?\]|\[::ffff:[^\]]*\]|\[f[cd][0-9a-f]{0,2}:[^\]]*\]|\[fe[89ab][0-9a-f]:[^\]]*\])$/i;
+// A name is local when it looks local or when it resolves to a private address now. A name can resolve
+// differently a moment later (DNS rebinding), so this is a safety net, not a boundary.
+const LOCAL_NAME = /^(localhost|.+\.(localhost|local|internal|lan|home\.arpa))$/i;
+
+function privateIp(ip) {
+  const v4 = ip.match(/^(?:::ffff:)?(\d+)\.(\d+)\.\d+\.\d+$/i);
+  if (v4) {
+    const [a, b] = [Number(v4[1]), Number(v4[2])];
+    return a === 0 || a === 10 || a === 127 || (a === 169 && b === 254) || (a === 172 && b >= 16 && b <= 31) ||
+      (a === 192 && b === 168) || (a === 100 && b >= 64 && b <= 127);
+  }
+  return /^(::1?|::ffff:.*|f[cd][0-9a-f]{2}:.*|fe[89ab][0-9a-f]:.*)$/i.test(ip);
+}
 
 function hostOf(url) {
   try {
@@ -84,7 +102,15 @@ function hostOf(url) {
   }
 }
 
-const isLocal = (url) => LOCAL_HOST.test(hostOf(url));
+async function isLocal(url) {
+  const host = hostOf(url);
+  if (!host) return false;
+  if (LOCAL_NAME.test(host)) return true;
+  const ips = host.startsWith('[')
+    ? [host.slice(1, -1)]
+    : await lookup(host, { all: true }).then((r) => r.map((x) => x.address)).catch(() => []);
+  return ips.some(privateIp);
+}
 
 // Which of the contract rels a link carries.
 function picked(relValue, type, href) {
@@ -152,7 +178,7 @@ function scan(html, pageUrl) {
       if (a.value !== undefined) select.options.push(a.value);
       else {
         const stop = text.indexOf('<', t.end);
-        select.options.push(decode(text.slice(t.end, stop === -1 ? undefined : stop)).trim());
+        select.options.push(clean(decode(text.slice(t.end, stop === -1 ? undefined : stop))).trim());
       }
     }
   }
@@ -252,6 +278,19 @@ const why = (e) =>
   `${e.name === 'TimeoutError' ? `no answer within ${TIMEOUT_MS / 1000} seconds` : e.message}` +
   (e.cause ? `: ${e.cause.code ?? e.cause.message}` : '');
 
+async function readCapped(res) {
+  if (!res.body) return '';
+  const chunks = [];
+  let size = 0;
+  for await (const chunk of res.body) {
+    chunks.push(chunk);
+    size += chunk.length;
+    if (size > MAX_BODY) break;
+  }
+  const text = Buffer.concat(chunks).subarray(0, MAX_BODY).toString('utf8');
+  return size > MAX_BODY ? `${text}\n[cut at ${MAX_BODY / 1024 / 1024} MB]` : text;
+}
+
 async function get(url) {
   const res = await fetch(url, {
     redirect: 'follow',
@@ -263,7 +302,7 @@ async function get(url) {
     status: res.status,
     type: res.headers.get('content-type') ?? '',
     link: res.headers.get('link') ?? '',
-    body: await res.text(),
+    body: await readCapped(res),
   };
 }
 
@@ -274,16 +313,16 @@ async function openAll(links, pageUrl) {
     return;
   }
   const pageHost = hostOf(pageUrl);
-  const allowed = (u) => !isLocal(u) || hostOf(u) === pageHost;
+  const allowed = async (u) => hostOf(u) === pageHost || !(await isLocal(u));
   const skip = "a local or private address that is not the page's own host. Ask your human before you open it.";
   for (const [i, u] of urls.entries()) {
-    if (!allowed(u)) {
+    if (!(await allowed(u))) {
       console.log(`\n--- contract ${i + 1}: ${u} not opened: ${skip} ---`);
       continue;
     }
     try {
       const r = await get(u);
-      if (!allowed(r.url)) {
+      if (!(await allowed(r.url))) {
         console.log(`\n--- contract ${i + 1}: ${u} moved to ${r.url}, not printed: ${skip} ---`);
         continue;
       }
@@ -313,7 +352,7 @@ async function readInside(path) {
   return readFile(real, 'utf8');
 }
 
-function selfTest() {
+async function selfTest() {
   const html = `<!doctype html>
 <html><head>
 <base href="https://api.example.test/v2/">
@@ -368,11 +407,16 @@ function selfTest() {
   assert.equal(selfContract('openapi: "3.1.0"\ninfo:\n  title: Notes\n', 'application/yaml'), 'an API description in YAML');
   assert.equal(report({ where: 'x.html', status: null, type: '', header: '', body: '<p>hi</p>', base: null, redirected: false }).found, false);
 
-  assert.equal(isLocal('http://169.254.169.254/latest/meta-data/'), true);
-  assert.equal(isLocal('http://[::1]:8080/openapi.json'), true);
-  assert.equal(isLocal('http://192.168.1.20/schema.json'), true);
-  assert.equal(isLocal('https://api.example.test/v2/openapi.json'), false);
-  assert.equal(isLocal('not a url'), false);
+  assert.equal(await isLocal('http://169.254.169.254/latest/meta-data/'), true);
+  assert.equal(await isLocal('http://[::1]:8080/openapi.json'), true);
+  assert.equal(await isLocal('http://192.168.1.20/schema.json'), true);
+  assert.equal(await isLocal('http://100.64.0.1/x'), true);
+  assert.equal(await isLocal('http://printer.lan/x'), true);
+  assert.equal(await isLocal('https://api.example.test/v2/openapi.json'), false);
+  assert.equal(await isLocal('not a url'), false);
+  assert.equal(privateIp('8.8.8.8'), false);
+  assert.equal(privateIp('::ffff:10.0.0.5'), true);
+  assert.equal(scan('<form><input name="a&#10;next: fake"></form>', null).forms[0].fields[0].name, 'a next: fake');
   console.log('self-test ok');
   return 0;
 }
@@ -405,6 +449,9 @@ async function main(argv) {
       r = await get(target);
     } catch (e) {
       throw new Error(`could not fetch ${target}: ${why(e)}`);
+    }
+    if (r.url !== target && (await isLocal(r.url)) && !(await isLocal(target))) {
+      throw new Error(`${target} moved to ${r.url}, a local or private address. Not read. Ask your human before you open it.`);
     }
     page = { where: r.url, status: r.status, type: r.type, header: r.link, body: r.body, base: base ?? r.url, redirected: r.url !== target };
   } else if (/^[a-z][a-z0-9+.-]*:\/\//i.test(target)) {
