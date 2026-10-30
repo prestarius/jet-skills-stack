@@ -38,7 +38,7 @@ The plugin `name` namespaces components, e.g. `/jet-skills:architect-review`.
 **Skills only, any Agent-Skills tool** (Cursor, Codex, Copilot, Gemini CLI, …):
 
 ```bash
-npx skills add prestarius/jet-skills-stack --list   # see the 24 skills
+npx skills add prestarius/jet-skills-stack --list   # see the 27 skills
 npx skills add prestarius/jet-skills-stack -s design-doc -s zoom-out -s eval-tool
 ```
 
@@ -69,6 +69,9 @@ Claude may start these on its own when the description matches.
 | [`migration-plan`](skills/migration-plan/SKILL.md) | Phase a modernization: coexistence mechanism, exit criteria, rollback per phase. |
 | [`obsidian-note`](skills/obsidian-note/SKILL.md) | Complete Obsidian note in the house schema. |
 | [`postmortem`](skills/postmortem/SKILL.md) | Blameless incident postmortem with follow-ups ready for to-tickets. |
+| [`plan-to-issues`](skills/plan-to-issues/SKILL.md) | Split a plan file into GitHub issues, one per unit of work, in dependency order, after the human approves the table and the issue shape. From the MEGA.dev rig template (MIT), S01E04. |
+| [`coordinator-workers`](skills/coordinator-workers/SKILL.md) | One subagent worker per issue in its own worktree; this session briefs, reads every diff, merges, closes, and waits on outside events. From MEGA.dev S01E04. |
+| [`job-supervisor`](skills/job-supervisor/SKILL.md) | Wrapper for launchd/cron jobs that records each run as a JSON line in `jobs/runs/<day>.jsonl`; bundled `scripts/run.sh`. From MEGA.dev S01E04. |
 | [`read`](skills/read/SKILL.md) | Before sending a body to an unread contract, shortening someone's text, or naming the newest model: find and quote the contract, cut by rule, check a live source. From MEGA.dev S01E01. |
 | [`release-notes`](skills/release-notes/SKILL.md) | Git history since a tag → changelog entry / release notes in the house format. |
 | [`skill-stocktake`](skills/skill-stocktake/SKILL.md) | Audit skills for overlap, staleness, context cost, and third-party safety; verdicts keep/improve/update/hide/retire/merge (forked). |
