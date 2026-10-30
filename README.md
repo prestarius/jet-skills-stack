@@ -38,7 +38,7 @@ The plugin `name` namespaces components, e.g. `/jet-skills:architect-review`.
 **Skills only, any Agent-Skills tool** (Cursor, Codex, Copilot, Gemini CLI, …):
 
 ```bash
-npx skills add prestarius/jet-skills-stack --list   # see the 27 skills
+npx skills add prestarius/jet-skills-stack --list   # see the 28 skills
 npx skills add prestarius/jet-skills-stack -s design-doc -s zoom-out -s eval-tool
 ```
 
@@ -63,6 +63,7 @@ Claude may start these on its own when the description matches.
 | [`document`](skills/document/SKILL.md) | Diataxis-structured docs (tutorial/how-to/reference/explanation) from the real code. |
 | [`estimate`](skills/estimate/SKILL.md) | Effort estimation with explicit assumptions and confidence ranges — never a single confident number. |
 | [`eval-tool`](skills/eval-tool/SKILL.md) | Evaluate/recommend a tool or model with mandatory web research. |
+| [`gh-tickets`](skills/gh-tickets/SKILL.md) | GitHub tickets with `gh`: public repo after a yes, one issue per problem from data, close only with a quoted source. From MEGA.dev S01E03. |
 | [`interview-guide`](skills/interview-guide/SKILL.md) | Technical interview guide with rubric and evaluation template. |
 | [`market-research`](skills/market-research/SKILL.md) | Source-attributed landscape research; every claim cited and dated (forked into `researcher`). |
 | [`meeting-notes`](skills/meeting-notes/SKILL.md) | Transcript/raw notes → decisions, actions, open questions; routed to obsidian-note / domain-modeling / to-tickets. |
