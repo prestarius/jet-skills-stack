@@ -1,7 +1,7 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
   "name": "jet-skills",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Jet's company-agnostic Claude Code stack: architect/engineering skills, role workflows, behavioral guardrails, and a per-project context bootstrap.",
   "author": { "name": "Jet", "email": "prestarius@proton.me" },
   "homepage": "https://prestarius.dev",
